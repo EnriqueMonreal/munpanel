@@ -1,0 +1,417 @@
+/** Estilos sobreescritos */
+.g-cartografia-prismaticos {
+  color: #00796B !important;
+}
+.g-cartografia-flecha-derecha {
+  color: #536DFE !important;
+}
+.m-control.activated>button {
+  color: rgb(255, 0, 0) !important;
+}
+
+.m-areas>div.m-area.m-bottom.m-left{
+  margin-bottom: 10px !important;
+}
+
+.m-areas>div.m-area.m-bottom.m-right{
+  margin-bottom: 10px !important;
+}
+
+.m-areas>div.m-area.m-top.m-left{
+  margin-top: 10px !important;
+}
+
+/** Estilos propios*/
+.m-areas>div.m-area>div.m-panel.m-munpanel{
+  transition: none !important;
+  
+}
+
+
+
+.m-areas>div.m-area>div.m-panel.m-munpanel>div.m-panel-controls{
+  transition: none !important;
+}
+.m-areas>div.m-area>div.m-panel.m-munpanel.collapsed{
+  height: 40px !important;
+}
+
+.m-areas>div.m-area>div.m-panel.m-munpanel.collapsed>button{
+  background-color: #00897b !important;
+  color:#ffffff !important
+}
+
+.m-areas>div.m-area.m-top.m-right>div.m-panel.m-munpanel.opened{
+  width:510px;
+  height: 80vh;
+  border-radius: 0px !important;
+  
+}
+.m-areas>div.m-area.m-top.m-right>div.m-panel.m-munpanel.opened>button{
+  position: absolute;
+  right: 510px;  
+  background-color: #00897b !important;
+  color:#ffffff !important;
+  
+
+}
+
+div#controlTablas>button.g-cartografia-flecha-izquierda{
+  color: #ffffff !important;
+  background-image: linear-gradient(#3ac7b9,#00897b,#0b3b37);            
+  width: 40px !important;
+  height: 25px !important;
+  border-top-left-radius: 12.5px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 12.5px !important;
+  border-bottom-right-radius: 0px !important;
+  border-top: 2px solid #3ac7b9 !important;
+  border-left: 2px solid #3ac7b9 !important;
+  border-bottom: 2px solid #0b3b37 !important;
+  border-right: 2px solid #0b3b37 !important;
+  box-shadow: 1px 2px 4px #a9b1b0 !important;
+  font-size: 12px !important; 
+  padding-top: 5px !important;
+  padding-left: 13px !important;
+}
+
+div#controlTablas>button.g-cartografia-flecha-izquierda:active{
+  background-image: linear-gradient(#9fe9e1,#37b6a9,#37746e);
+  border: 2px solid #051d1b !important;
+
+}
+
+div#controlTablas>button.g-cartografia-flecha-izquierda:hover{
+  background-image: linear-gradient(#9fe9e1,#37b6a9,#37746e);
+  box-shadow: 2px 4px 4px #0b3b37 !important;
+  transition: 0.2s ease;
+}
+
+div#controlTablas>button.g-cartografia-flecha-derecha{
+  color: #ffffff !important;
+  background-image: linear-gradient(#3ac7b9,#00897b,#0b3b37);
+  width: 40px !important;
+  height: 25px !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 12.5px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 12.5px !important;
+  border-top: 2px solid #3ac7b9 !important;
+  border-left: 2px solid #3ac7b9 !important;
+  border-bottom: 2px solid #0b3b37 !important;
+  border-right: 2px solid #0b3b37 !important;
+  box-shadow: 1px 2px 4px #a9b1b0 !important;
+  font-size: 12px !important; 
+  padding-top: 5px !important;
+  padding-left: 10px !important;
+  
+  
+}
+div#controlTablas>button.g-cartografia-flecha-derecha:active{
+  background-image: linear-gradient(#9fe9e1,#37b6a9,#37746e);
+  border: 2px solid #051d1b !important;
+  
+}
+
+div#controlTablas>button.g-cartografia-flecha-derecha:hover{
+  background-image: linear-gradient(#9fe9e1,#37b6a9,#37746e);
+  box-shadow: 2px 4px 4px #0b3b37 !important;
+  transition: 0.2s ease;
+}
+
+#buscador-button-container {
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+#buscador-button {
+  transition: opacity 0.25s ease 0s, color 0.25s ease 0s;
+  padding: 0;
+  font-size: 19px;
+  background: 0 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border: 0;
+  font-family: g-cartografia !important;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #ffffff !important;
+  background-color: #00897b !important;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0 rgba(0, 0, 0, 0.02);
+}
+
+#buscador-close-button {
+  transition: opacity 0.25s ease 0s, color 0.25s ease 0s;
+  padding: 0;
+  font-size: 19px;
+  background: 0 0;
+  cursor: pointer;
+  width: 40px;
+  height: 4vh;
+  box-sizing: border-box;
+  border: 0;
+  font-family: g-cartografia !important;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #ffffff !important;
+  background-color: #00897b !important;
+  border-radius: 10% 0 0 10%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0 rgba(0, 0, 0, 0.02);
+  float: left;
+}
+
+#buscador-area {
+  width: 550px;
+  height: 80vh;
+  background-color: transparent !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  margin-top: 0px;
+  margin-right: 0px;
+  display: none;
+}
+
+#buscador-panel {
+  float: right;
+  width: 510px;
+  height: 80vh;
+  background-color: #ffffff;
+}
+
+#buscador-panel-title {
+  line-height: 40px;
+  text-align: center;
+  height: 40px;
+  font-size: 15px;
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  background-color: #00897b;
+  font-weight: 600;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.3); */
+}
+
+#buscador-panel-body {
+  margin: auto;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  font-size: 100%;
+  width: 99%;
+  height: 85.5vh;
+  background-color: #fff;
+}
+
+#content-panel {
+  width: 100%;
+  height: 100%;
+  margin-top: 0%;
+}
+
+#selectProvincias {
+  margin-left: 25%;            
+  width: 50%;
+  height: 20px;
+}
+
+#selectMunicipios {
+  margin-left: 25%; 
+  margin-bottom: 20px;           
+  width: 50%;
+  height: 20px;
+}
+
+#buscaMunicipio input{
+  margin-left: 10%;            
+  width: 80%;
+  height: 1em;
+  font-size: 1.2em;
+  font-family: helvetica, arial, sans-serif;
+  color: #000
+}
+#buscaMunicipio label{
+  display: none;
+}
+#divBotones{
+  display:none;
+  justify-content: center;
+  margin-left: 10%;            
+  width: 80%;
+
+}
+#divBotones button{
+  margin-left: 10px;
+  user-select: none;
+  cursor: pointer;
+}
+#botonAtras{
+  display: none;
+}
+
+#controlTablas{
+  display:none;
+  justify-content: center;
+  margin-left: 40%;            
+  width: 20%;
+  margin-top: 10px;
+
+}
+#controlTablas button{
+  margin-left: 10px;
+  user-select: none;
+  cursor: pointer;
+}
+
+
+#DivTablaResultados{
+  display: none;
+  width: 70%;
+  margin-top: 20px;
+  margin-left: 15%;
+ 
+}
+.TablaResultados{ 
+  display: table;          
+  width: 100%;
+}
+.TablaOculta{
+  display: none;
+}
+
+
+
+
+.TablaResultados td{ 
+             
+  text-align:center;
+  user-select: none; 
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;            
+  background-color: #00897b;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.TablaResultados tr{ 
+            
+  user-select: none;          
+  text-align:center;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  background-color: #eee;            
+  color: #000;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: 0.25s ease;
+}
+
+
+.TablaResultados tr:hover{
+  background-color: #ccc;
+  color: #00897b;
+}       
+
+
+
+#resultadosBusqueda{
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 10%;            
+  width: 80%;
+  height:fit-content;
+  border-radius: 7px;
+  border-color: #f00;
+  border-style: ridge;
+}
+#resulBus{
+  color:#000;
+  font-size: 1.5em;
+}
+.opMunicipiosProv{
+  text-align-last: center;
+  text-align: center;
+  color: #f00;
+}
+
+.tituloSelect{
+  text-align: center;
+  color: #000;
+}
+
+table.list_feat{
+  top:15%;
+  margin:2.5%;
+  width:95%;
+  border:1px solid #ddd;
+  border-collapse:collapse;    
+  font-size: 100%;
+  font-family: helvetica, arial, sans-serif;
+  padding: 0.3em;
+  text-align: center;
+  border:1px solid #fda823;
+  
+}
+
+table.list_feat th{
+  padding: 0.3em 0.3em;                
+  font-family: helvetica, arial, sans-serif;                
+  background:#fae5c2;
+  border:1px solid #fda823;
+  
+  color:#000;
+}
+
+table.list_feat td{
+  background:#f8efe6;
+  border:1px solid #fda823;
+  color:#444;
+}
+
+.pop_feat .m-header .m-title{
+  margin-top: 3%;
+  text-align: center;
+  font-size: 1.1em;
+  font-style: italic;
+  padding-bottom: 5px;
+  font-weight: bold;
+  font-family: helvetica, arial, sans-serif;
+  color:#000;
+}
+
+table.list_feat caption{
+  font-size: 1.1em;
+  font-style: italic;
+  padding-bottom: 5px;
+  font-weight: bold;
+  font-family: helvetica, arial, sans-serif;
+  color:#000;
+}
+
+.pop_feat {
+  width:300px;
+  height:fit-content;
+  
+}

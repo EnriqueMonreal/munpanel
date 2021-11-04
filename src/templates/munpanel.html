@@ -1,0 +1,57 @@
+<div id="div-contenedor" class="m-control m-container m-munpanel">
+    <div id='buscador-panel'>
+        <div id='buscador-panel-title'>Buscador de Municipios</div>
+        <div id='buscador-panel-body'>
+            <div id='content-panel'>
+                <h3 class='tituloSelect'>Provincias</h3>
+                <select name='provincias' id='selectProvincias'>
+                    <option class='opProvincias' value='Select' disabled='disabled' selected>Selecciona una
+                        provincia</option>
+                    <option class='opProvincias' value='Almeria'>Almería</option>
+                    <option class='opProvincias' value='Cadiz'>Cádiz</option>
+                    <option class='opProvincias' value='Cordoba'>Córdoba</option>
+                    <option class='opProvincias' value='Granada'>Granada</option>
+                    <option class='opProvincias' value='Huelva'>Huelva</option>
+                    <option class='opProvincias' value='Jaen'>Jaén</option>
+                    <option class='opProvincias' value='Malaga'>Málaga</option>
+                    <option class='opProvincias' value='Sevilla'>Sevilla</option>
+                    <option class='opProvincias' value='Todas'>Todas</option>
+                </select>
+                <h3 class='tituloSelect'>Municipios</h3>
+                <select name='municipios' id='selectMunicipios'>
+                    <option class='opMunicipios' value='Select' disabled='disabled' selected>Selecciona un
+                        municipio</option>
+
+                </select>
+                <h3 class='tituloSelect'>Buscador de Municipios</h3>
+                <form id='buscaMunicipio'>
+                    <label for='busMuni'>Municipio</label>
+                    <input type='text' id='busMuni' name='municipio' autocomplete='off'>
+                </form>
+                <div id='divBotones'>
+                    <button id='botonBusca' title='Busca un Municipio'>Busca</button>
+                    <button id='botonLimpia' title='Limpia campos'>Limpia</button>
+                </div>
+                <div id='DivTablaResultados'>
+                    <table id='TablaResultados' class='TablaOculta'>
+                        <thead>
+                            <tr>
+                                <td>MUNICIPIO</td>
+                                <td>PROVINCIA</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id='controlTablas'>
+                    <button id='botonAtras' title='Anterior' class='g-cartografia-flecha-izquierda'></button>
+                    <button id='botonAvance' title='Siguiente' class='g-cartografia-flecha-derecha'></button>
+                </div>
+                <div id='resultadosBusqueda'>
+                    <p id='resulBus'>RESULTADO BUSQUEDA</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
