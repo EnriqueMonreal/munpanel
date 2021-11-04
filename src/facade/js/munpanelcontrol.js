@@ -123,8 +123,6 @@ export default class MunpanelControl extends M.Control {
           this.config.munSelect = features[0].getAttribute('nombre');
           this.seleccionaMunicipio(this.config.provinciaSeleccionada, this.config.munSelect);
           if (document.querySelectorAll('select#selectProvincias')[0].value == 'Select') {
-            console.log(features[0].getAttribute('provincia'));
-            console.log(this.config.munSelect);
             document.querySelectorAll('select#selectProvincias')[0].value = 'Todas';
             this.creaSelect('Todas');
             this.cambiaSelect(this.config.munSelect);
@@ -239,16 +237,15 @@ export default class MunpanelControl extends M.Control {
     for (let i = 0; i < numProvincias.length; i++) {
       select.removeChild(numProvincias[i]);
     }
-    if (provincia != 'Todas') {
-      entrada = document.createElement('option');
-      entrada.setAttribute('value', 'Select');
-      entrada.setAttribute('class', 'opMunicipios');
-      entrada.setAttribute('disabled', 'disabled');
-      entrada.setAttribute('selected', 'selected');
-      entradaTexto = document.createTextNode('Selecciona un municipio');
-      entrada.appendChild(entradaTexto);
-      select.appendChild(entrada);
-
+    entrada = document.createElement('option');
+    entrada.setAttribute('value', 'Select');
+    entrada.setAttribute('class', 'opMunicipios');
+    entrada.setAttribute('disabled', 'disabled');
+    entrada.setAttribute('selected', 'selected');
+    entradaTexto = document.createTextNode('Selecciona un municipio');
+    entrada.appendChild(entradaTexto);
+    select.appendChild(entrada);
+    if (provincia != 'Todas') {      
       for (let i = 0; i < this.config.layerList.length; i++) {
         if (provincia == this.config.layerList[i].getImpl().name) {
           for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
@@ -281,7 +278,8 @@ export default class MunpanelControl extends M.Control {
         }
       }
     }
-    select.options[0].selected = 'selected';
+    
+    select.value='Select';
   }
   seleccionaMunicipio(Provi, Munic) {
 
@@ -334,6 +332,8 @@ export default class MunpanelControl extends M.Control {
     var popup = new M.Popup();
 
 
+
+
     return [posicion, zoom, popup];
   }
 
@@ -342,6 +342,13 @@ export default class MunpanelControl extends M.Control {
     this.map_.setZoom(zoom);
     var popup_rec = document.querySelectorAll('div.m-content')[0];
     popup_rec.className = 'pop_feat';
+
+    document.querySelectorAll('a.m-popup-closer')[0].addEventListener('click', () => {
+      for (let i = 0; i < this.config.layerList.length; i++) {
+        this.config.layerList[i].setStyle(this.config.styleList[i]);
+      }
+      document.querySelectorAll('select#selectMunicipios')[0].value='Select';
+    });
   }
 
   popupTabContent(layerName, feature) {
@@ -586,11 +593,11 @@ export default class MunpanelControl extends M.Control {
     for (let i = 0; i < this.config.layerList.length; i++) {
       this.config.layerList[i].setStyle(this.config.styleList[i]);
     }
-    
+
 
     this.borraTablas();
 
-   
+
     let cont = this.map_.getLayers().length - 9;
     if ((this.config.provinciaSeleccionada != 'Select') && (this.config.provinciaSeleccionada != 'Todas')) {
       if (this.map_.getLayers().length > 9) {
