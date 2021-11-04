@@ -306,8 +306,8 @@ export default class MunpanelControl extends M.Control {
 
             muni.setStyle(new M.style.Polygon({
               fill: {
-                color: '#ffffff',
-                opacity: 1,
+                color: '#8d8d8d',
+                opacity: 0.5,
               },
               stroke: {
                 color: '#ff0000',
