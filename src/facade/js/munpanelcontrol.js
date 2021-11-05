@@ -119,6 +119,17 @@ export default class MunpanelControl extends M.Control {
           if (features[0] instanceof M.ClusteredFeature) {
             return;
           }
+          this.borraTablas();
+          this.config.pag = 0;
+          this.config.reg = 0;
+          this.config.result = [];
+          document.getElementById('busMuni').value = '';
+          document.getElementById('divBotones').style.display = 'none';
+          document.getElementById('resultadosBusqueda').style.display = 'none';
+          document.getElementById('controlTablas').style.display = 'none';
+          document.getElementById('resulBus').innerHTML = '';
+          document.getElementById('selectMunicipios').options.item(0).selected = 'selected';
+
           this.config.provinciaSeleccionada = this.quitaAcentos(features[0].getAttribute('provincia'));
           this.config.munSelect = features[0].getAttribute('nombre');
           this.seleccionaMunicipio(this.config.provinciaSeleccionada, this.config.munSelect);
@@ -245,7 +256,7 @@ export default class MunpanelControl extends M.Control {
     entradaTexto = document.createTextNode('Selecciona un municipio');
     entrada.appendChild(entradaTexto);
     select.appendChild(entrada);
-    if (provincia != 'Todas') {      
+    if (provincia != 'Todas') {
       for (let i = 0; i < this.config.layerList.length; i++) {
         if (provincia == this.config.layerList[i].getImpl().name) {
           for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
@@ -278,8 +289,8 @@ export default class MunpanelControl extends M.Control {
         }
       }
     }
-    
-    select.value='Select';
+
+    select.value = 'Select';
   }
   seleccionaMunicipio(Provi, Munic) {
 
@@ -347,7 +358,7 @@ export default class MunpanelControl extends M.Control {
       for (let i = 0; i < this.config.layerList.length; i++) {
         this.config.layerList[i].setStyle(this.config.styleList[i]);
       }
-      document.querySelectorAll('select#selectMunicipios')[0].value='Select';
+      document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
     });
   }
 
