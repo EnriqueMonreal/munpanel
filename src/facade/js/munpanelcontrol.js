@@ -68,6 +68,30 @@ export default class MunpanelControl extends M.Control {
     const botonAvance = html.querySelectorAll('button#botonAvance')[0];
     const tablaResultados = html.querySelectorAll('table#TablaResultados')[0];
 
+    const requestPoblacion = new XMLHttpRequest();
+    requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
+    requestPoblacion.responseType = 'json';
+    requestPoblacion.send();
+
+    requestPoblacion.onload = () => {
+      this.config.Poblacion = requestPoblacion.response;
+      let t = 0;
+      for (let i = 0; i < this.config.Poblacion.data.length; i++) {
+        
+        if (this.config.Poblacion.data[i][1].des == '2020') {
+          this.config.listPoblacion[2 * t] = this.config.Poblacion.data[i][0].des;
+          this.config.listPoblacion[2 * t + 1] = this.config.Poblacion.data[i][3].format;
+          t=t+1;
+          }
+      }
+
+      this.config.listPoblacion = this.normalizaPoblacion(this.config.listPoblacion);
+
+      
+    }
+
+
+
 
     this.map_.on(M.evt.COMPLETED, () => {
 
@@ -303,7 +327,17 @@ export default class MunpanelControl extends M.Control {
 
   buscaMunicipio(mun, prov) {
     let muni;
+    let encontrado = false;
 
+    for(let i=0;i <this.config.listPoblacion.length;i++){     
+      if(this.config.listPoblacion[i]==mun){
+        this.config.pobSelect = this.config.listPoblacion[i+1] + ' hab.';        
+        encontrado = true;
+      }         
+    }
+    if(encontrado == false){
+      this.config.pobSelect = '---';
+    }
 
     for (let i = 0; i < this.config.layerList.length; i++) {
       this.config.layerList[i].setStyle(this.config.styleList[i]);
@@ -371,7 +405,7 @@ export default class MunpanelControl extends M.Control {
     featureTabOpts = {
       'icon': 'g-cartografia-pin',
       'title': 'Municipio de ' + layerName,
-      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + '</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + '</td></tr></table></div>'
+      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + '</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + '</td></tr><tr><th>Población año 2020 </th><td>' + this.config.pobSelect + '</td></tr></table></div>'
     };
     return featureTabOpts
 
@@ -624,6 +658,40 @@ export default class MunpanelControl extends M.Control {
     this.config.pag = 0;
     this.config.reg = 0;
     this.config.result = [];
+  }
+
+  cargaPoblacion() {
+    const requestPoblacion = new XMLHttpRequest();
+    requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
+    requestPoblacion.responseType = 'json';
+    requestPoblacion.send();
+    var Poblacion = null;
+    do {
+      Poblacion = requestPoblacion.response;
+      console.log(Poblacion);
+    } while (Poblacion == null);
+    return Poblacion;
+  }
+
+  normalizaPoblacion(listaPoblacion){
+    for(let i=0; i<listaPoblacion.length; i++){
+      if(listaPoblacion[i].indexOf('(El)')!==-1){
+        listaPoblacion[i] = 'El ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (El)'));
+      }
+      if(listaPoblacion[i].indexOf('(Los)')!==-1){
+        listaPoblacion[i] = 'Los ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (Los)'));
+      }
+      if(listaPoblacion[i].indexOf('(La)')!==-1){
+        listaPoblacion[i] = 'La ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (La)'));
+      }
+      if(listaPoblacion[i].indexOf('(Las)')!==-1){
+        listaPoblacion[i] = 'Las ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (Las)'));
+      }
+      if(listaPoblacion[i].indexOf('(capital)')!==-1){
+        listaPoblacion[i] = listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (capital)'));
+      }
+    }
+    return listaPoblacion;
   }
 
 }

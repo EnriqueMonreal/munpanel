@@ -14,6 +14,11 @@ const map = M.map({
 //   }
 // );
 
+
+
+
+
+
 const Almeria = new M.layer.GeoJSON(
   {
     name: "Almeria",
@@ -216,6 +221,9 @@ const numeroTablas = 0;
 const pag = 0;
 const reg = 0;
 const result = [];
+const Poblacion = '';
+const listPoblacion = [];
+const pobSelect ='---';
 
 Almeria.setStyle(categoriaAlmeria);
 Granada.setStyle(categoriaGranada);
@@ -253,10 +261,13 @@ const configMunpanel = {
     categoriaSevilla,
     categoriaHuelva,
     categoriaCadiz,
-    categoriaMalaga,    
+    categoriaMalaga,
   ],
+  Poblacion:Poblacion,
+  listPoblacion:listPoblacion,
+  pobSelect:pobSelect,
   provinciaSeleccionada: provinciaSeleccionada,
-  munSelect: munSelect,  
+  munSelect: munSelect,
   numeroTablas: numeroTablas,
   pag: pag,
   reg: reg,
