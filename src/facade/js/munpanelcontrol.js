@@ -121,8 +121,12 @@ export default class MunpanelControl extends M.Control {
         this.seleccionaMunicipio(Provi, Munic);
       });
 
-      buscadorMunicipio.addEventListener('keypress', () => {
+      buscadorMunicipio.addEventListener('keydown', (e) => {
         this.muestraBotones();
+        if (e.keyCode === 13) {  //chequea que la tecla presionada es "Enter"
+          document.getElementById('botonBusca').focus();
+        }
+
       });
 
       botonBuscaMunicipio.addEventListener('click', () => {
@@ -348,7 +352,7 @@ export default class MunpanelControl extends M.Control {
         encontrado = true;
       }
     }
-    if (encontrado == false) {
+    if ((encontrado == false) || (this.config.pobSelect20.length < 6)) {
       this.config.pobSelect20 = '---';
     }
     encontrado = false;
@@ -358,7 +362,7 @@ export default class MunpanelControl extends M.Control {
         encontrado = true;
       }
     }
-    if (encontrado == false) {
+    if ((encontrado == false) || (this.config.pobSelect19.length < 6)) {
       this.config.pobSelect19 = '---';
     }
 
@@ -369,9 +373,10 @@ export default class MunpanelControl extends M.Control {
         encontrado = true;
       }
     }
-    if (encontrado == false) {
+    if ((encontrado == false) || (this.config.pobSelect18.length < 6)) {
       this.config.pobSelect18 = '---';
     }
+
 
     for (let i = 0; i < this.config.layerList.length; i++) {
       this.config.layerList[i].setStyle(this.config.styleList[i]);
