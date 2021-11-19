@@ -221,9 +221,12 @@ const numeroTablas = 0;
 const pag = 0;
 const reg = 0;
 const result = [];
-const Poblacion = '';
-const listPoblacion = [];
-const pobSelect ='---';
+const listPoblacion18 = [];
+const listPoblacion19 = [];
+const listPoblacion20 = [];
+const pobSelect20 ='---';
+const pobSelect19 ='---';
+const pobSelect18 ='---';
 
 Almeria.setStyle(categoriaAlmeria);
 Granada.setStyle(categoriaGranada);
@@ -263,9 +266,12 @@ const configMunpanel = {
     categoriaCadiz,
     categoriaMalaga,
   ],
-  Poblacion:Poblacion,
-  listPoblacion:listPoblacion,
-  pobSelect:pobSelect,
+  listPoblacion18:listPoblacion18,
+  listPoblacion19:listPoblacion19,
+  listPoblacion20:listPoblacion20,
+  pobSelect20:pobSelect20,
+  pobSelect19:pobSelect19,
+  pobSelect18:pobSelect18,
   provinciaSeleccionada: provinciaSeleccionada,
   munSelect: munSelect,
   numeroTablas: numeroTablas,

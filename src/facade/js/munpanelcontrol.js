@@ -68,29 +68,42 @@ export default class MunpanelControl extends M.Control {
     const botonAvance = html.querySelectorAll('button#botonAvance')[0];
     const tablaResultados = html.querySelectorAll('table#TablaResultados')[0];
 
+    //CONSULTA DATOS DE POBLACION AÑOS 2020, 2019 Y 2018
     const requestPoblacion = new XMLHttpRequest();
     requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
     requestPoblacion.responseType = 'json';
     requestPoblacion.send();
 
     requestPoblacion.onload = () => {
-      this.config.Poblacion = requestPoblacion.response;
+      var PoblacionJson = requestPoblacion.response;
       let t = 0;
-      for (let i = 0; i < this.config.Poblacion.data.length; i++) {
-        
-        if (this.config.Poblacion.data[i][1].des == '2020') {
-          this.config.listPoblacion[2 * t] = this.config.Poblacion.data[i][0].des;
-          this.config.listPoblacion[2 * t + 1] = this.config.Poblacion.data[i][3].format;
-          t=t+1;
-          }
+      let j = 0;
+      let k = 0;
+      for (let i = 0; i < PoblacionJson.data.length; i++) {
+
+        if (PoblacionJson.data[i][1].des == '2020') {
+          this.config.listPoblacion20[2 * t] = PoblacionJson.data[i][0].des;
+          this.config.listPoblacion20[2 * t + 1] = PoblacionJson.data[i][3].format;
+          t = t + 1;
+        }
+        if (PoblacionJson.data[i][1].des == '2019') {
+          this.config.listPoblacion19[2 * j] = PoblacionJson.data[i][0].des;
+          this.config.listPoblacion19[2 * j + 1] = PoblacionJson.data[i][3].format;
+          j = j + 1;
+        }
+        if (PoblacionJson.data[i][1].des == '2018') {
+          this.config.listPoblacion18[2 * k] = PoblacionJson.data[i][0].des;
+          this.config.listPoblacion18[2 * k + 1] = PoblacionJson.data[i][3].format;
+          k = k + 1;
+        }
       }
 
-      this.config.listPoblacion = this.normalizaPoblacion(this.config.listPoblacion);
-
-      
+      this.config.listPoblacion20 = this.normalizaPoblacion(this.config.listPoblacion20);
+      this.config.listPoblacion19 = this.normalizaPoblacion(this.config.listPoblacion19);
+      this.config.listPoblacion18 = this.normalizaPoblacion(this.config.listPoblacion18);
     }
 
-
+    //FIN CONSULTA
 
 
     this.map_.on(M.evt.COMPLETED, () => {
@@ -329,14 +342,35 @@ export default class MunpanelControl extends M.Control {
     let muni;
     let encontrado = false;
 
-    for(let i=0;i <this.config.listPoblacion.length;i++){     
-      if(this.config.listPoblacion[i]==mun){
-        this.config.pobSelect = this.config.listPoblacion[i+1] + ' hab.';        
+    for (let i = 0; i < this.config.listPoblacion20.length; i++) {
+      if (this.config.listPoblacion20[i] == mun) {
+        this.config.pobSelect20 = this.config.listPoblacion20[i + 1] + ' hab.';
         encontrado = true;
-      }         
+      }
     }
-    if(encontrado == false){
-      this.config.pobSelect = '---';
+    if (encontrado == false) {
+      this.config.pobSelect20 = '---';
+    }
+    encontrado = false;
+    for (let i = 0; i < this.config.listPoblacion19.length; i++) {
+      if (this.config.listPoblacion19[i] == mun) {
+        this.config.pobSelect19 = this.config.listPoblacion19[i + 1] + ' hab.';
+        encontrado = true;
+      }
+    }
+    if (encontrado == false) {
+      this.config.pobSelect19 = '---';
+    }
+
+    encontrado = false;
+    for (let i = 0; i < this.config.listPoblacion18.length; i++) {
+      if (this.config.listPoblacion19[i] == mun) {
+        this.config.pobSelect18 = this.config.listPoblacion18[i + 1] + ' hab.';
+        encontrado = true;
+      }
+    }
+    if (encontrado == false) {
+      this.config.pobSelect18 = '---';
     }
 
     for (let i = 0; i < this.config.layerList.length; i++) {
@@ -405,7 +439,7 @@ export default class MunpanelControl extends M.Control {
     featureTabOpts = {
       'icon': 'g-cartografia-pin',
       'title': 'Municipio de ' + layerName,
-      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + '</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + '</td></tr><tr><th>Población año 2020 </th><td>' + this.config.pobSelect + '</td></tr></table></div>'
+      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + '</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + '</td></tr><tr><th>Población año 2020 </th><td>' + this.config.pobSelect20 + '</td></tr><tr><th>Población año 2019 </th><td>' + this.config.pobSelect19 + '</td></tr><tr><th>Población año 2018 </th><td>' + this.config.pobSelect18 + '</td></tr></table></div>'
     };
     return featureTabOpts
 
@@ -673,22 +707,22 @@ export default class MunpanelControl extends M.Control {
     return Poblacion;
   }
 
-  normalizaPoblacion(listaPoblacion){
-    for(let i=0; i<listaPoblacion.length; i++){
-      if(listaPoblacion[i].indexOf('(El)')!==-1){
-        listaPoblacion[i] = 'El ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (El)'));
+  normalizaPoblacion(listaPoblacion) {
+    for (let i = 0; i < listaPoblacion.length; i++) {
+      if (listaPoblacion[i].indexOf('(El)') !== -1) {
+        listaPoblacion[i] = 'El ' + listaPoblacion[i].slice(0, listaPoblacion[i].indexOf(' (El)'));
       }
-      if(listaPoblacion[i].indexOf('(Los)')!==-1){
-        listaPoblacion[i] = 'Los ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (Los)'));
+      if (listaPoblacion[i].indexOf('(Los)') !== -1) {
+        listaPoblacion[i] = 'Los ' + listaPoblacion[i].slice(0, listaPoblacion[i].indexOf(' (Los)'));
       }
-      if(listaPoblacion[i].indexOf('(La)')!==-1){
-        listaPoblacion[i] = 'La ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (La)'));
+      if (listaPoblacion[i].indexOf('(La)') !== -1) {
+        listaPoblacion[i] = 'La ' + listaPoblacion[i].slice(0, listaPoblacion[i].indexOf(' (La)'));
       }
-      if(listaPoblacion[i].indexOf('(Las)')!==-1){
-        listaPoblacion[i] = 'Las ' + listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (Las)'));
+      if (listaPoblacion[i].indexOf('(Las)') !== -1) {
+        listaPoblacion[i] = 'Las ' + listaPoblacion[i].slice(0, listaPoblacion[i].indexOf(' (Las)'));
       }
-      if(listaPoblacion[i].indexOf('(capital)')!==-1){
-        listaPoblacion[i] = listaPoblacion[i].slice(0,listaPoblacion[i].indexOf(' (capital)'));
+      if (listaPoblacion[i].indexOf('(capital)') !== -1) {
+        listaPoblacion[i] = listaPoblacion[i].slice(0, listaPoblacion[i].indexOf(' (capital)'));
       }
     }
     return listaPoblacion;
