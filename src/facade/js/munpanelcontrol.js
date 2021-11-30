@@ -67,43 +67,42 @@ export default class MunpanelControl extends M.Control {
     const botonAtras = html.querySelectorAll('button#botonAtras')[0];
     const botonAvance = html.querySelectorAll('button#botonAvance')[0];
     const tablaResultados = html.querySelectorAll('table#TablaResultados')[0];
+    const selectorYear = html.querySelectorAll('select#selectPoblacion')[0];
 
-    //CONSULTA DATOS DE POBLACION AÑOS 2020, 2019 Y 2018
+
+    //CONSULTA DATOS DE POBLACION AÑOS 2020
     const requestPoblacion = new XMLHttpRequest();
     requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
     requestPoblacion.responseType = 'json';
     requestPoblacion.send();
 
+
+
     requestPoblacion.onload = () => {
       var PoblacionJson = requestPoblacion.response;
+
       let t = 0;
-      let j = 0;
-      let k = 0;
+
       for (let i = 0; i < PoblacionJson.data.length; i++) {
 
-        if (PoblacionJson.data[i][1].des == '2020') {
-          this.config.listPoblacion20[2 * t] = PoblacionJson.data[i][0].des;
-          this.config.listPoblacion20[2 * t + 1] = PoblacionJson.data[i][3].format;
+        if (PoblacionJson.data[i][1].des == this.config.pobYear) {
+          this.config.listPoblacion[2 * t] = PoblacionJson.data[i][0].des;
+          this.config.listPoblacion[2 * t + 1] = PoblacionJson.data[i][3].format;
           t = t + 1;
-        }
-        if (PoblacionJson.data[i][1].des == '2019') {
-          this.config.listPoblacion19[2 * j] = PoblacionJson.data[i][0].des;
-          this.config.listPoblacion19[2 * j + 1] = PoblacionJson.data[i][3].format;
-          j = j + 1;
-        }
-        if (PoblacionJson.data[i][1].des == '2018') {
-          this.config.listPoblacion18[2 * k] = PoblacionJson.data[i][0].des;
-          this.config.listPoblacion18[2 * k + 1] = PoblacionJson.data[i][3].format;
-          k = k + 1;
         }
       }
 
-      this.config.listPoblacion20 = this.normalizaPoblacion(this.config.listPoblacion20);
-      this.config.listPoblacion19 = this.normalizaPoblacion(this.config.listPoblacion19);
-      this.config.listPoblacion18 = this.normalizaPoblacion(this.config.listPoblacion18);
+      this.config.listPoblacion = this.normalizaPoblacion(this.config.listPoblacion);
+      requestPoblacion.abort();
     }
 
+
+
     //FIN CONSULTA
+
+    //this.consultaSuperavit();
+
+    //console.log(this.config.listSuperavit);
 
 
     this.map_.on(M.evt.COMPLETED, () => {
@@ -119,6 +118,21 @@ export default class MunpanelControl extends M.Control {
         const Provi = selectorProvincia.value;
         const Munic = selectorMunicipio.value;
         this.seleccionaMunicipio(Provi, Munic);
+      });
+
+      selectorYear.addEventListener('change', () => {
+        if(this.config.selectedFeature!={}){
+          this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+        }
+        
+        if (this.map_.getPopup()) {
+          this.map_.removePopup();
+        }
+        for (let i = 0; i < this.config.layerList.length; i++) {
+          this.config.layerList[i].setStyle(this.config.styleList[i]);
+        }
+        this.config.pobYear = selectorYear.value;
+        this.consultaPoblacion(this.config.pobYear);
       });
 
       buscadorMunicipio.addEventListener('keydown', (e) => {
@@ -160,6 +174,10 @@ export default class MunpanelControl extends M.Control {
           if (features[0] instanceof M.ClusteredFeature) {
             return;
           }
+          this.config.selectedFeature = features[0];
+          this.config.selectedProv = this.config.layerList[i];        
+          
+         
           this.borraTablas();
           this.config.pag = 0;
           this.config.reg = 0;
@@ -179,9 +197,10 @@ export default class MunpanelControl extends M.Control {
             this.creaSelect('Todas');
             this.cambiaSelect(this.config.munSelect);
           }
-
+          
         });
       }
+     
     });
   }
 
@@ -346,37 +365,15 @@ export default class MunpanelControl extends M.Control {
     let muni;
     let encontrado = false;
 
-    for (let i = 0; i < this.config.listPoblacion20.length; i++) {
-      if (this.config.listPoblacion20[i] == mun) {
-        this.config.pobSelect20 = this.config.listPoblacion20[i + 1] + ' hab.';
+    for (let i = 0; i < this.config.listPoblacion.length; i++) {
+      if (this.config.listPoblacion[i] == mun) {
+        this.config.pobSelect = this.config.listPoblacion[i + 1] + ' hab.';
         encontrado = true;
       }
     }
-    if ((encontrado == false) || (this.config.pobSelect20.length < 6)) {
-      this.config.pobSelect20 = '---';
+    if ((encontrado == false) || (this.config.pobSelect.length < 6)) {
+      this.config.pobSelect = '---';
     }
-    encontrado = false;
-    for (let i = 0; i < this.config.listPoblacion19.length; i++) {
-      if (this.config.listPoblacion19[i] == mun) {
-        this.config.pobSelect19 = this.config.listPoblacion19[i + 1] + ' hab.';
-        encontrado = true;
-      }
-    }
-    if ((encontrado == false) || (this.config.pobSelect19.length < 6)) {
-      this.config.pobSelect19 = '---';
-    }
-
-    encontrado = false;
-    for (let i = 0; i < this.config.listPoblacion18.length; i++) {
-      if (this.config.listPoblacion19[i] == mun) {
-        this.config.pobSelect18 = this.config.listPoblacion18[i + 1] + ' hab.';
-        encontrado = true;
-      }
-    }
-    if ((encontrado == false) || (this.config.pobSelect18.length < 6)) {
-      this.config.pobSelect18 = '---';
-    }
-
 
     for (let i = 0; i < this.config.layerList.length; i++) {
       this.config.layerList[i].setStyle(this.config.styleList[i]);
@@ -432,6 +429,7 @@ export default class MunpanelControl extends M.Control {
         this.config.layerList[i].setStyle(this.config.styleList[i]);
       }
       document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
+      this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
     });
   }
 
@@ -441,10 +439,15 @@ export default class MunpanelControl extends M.Control {
     let cod_mun = feature.getAttribute('cod_mun');
     let superficie = this.superficieMunicipio(feature)[0];
     let perimetro = this.superficieMunicipio(feature)[1];
+    let densidad ='---';
+    if(this.config.pobSelect != '---'){
+      densidad = (parseFloat(this.config.pobSelect) / superficie).toFixed(2);
+      densidad = densidad + ' hab./Km²';
+    }
     featureTabOpts = {
       'icon': 'g-cartografia-pin',
       'title': 'Municipio de ' + layerName,
-      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + '</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + '</td></tr><tr><th>Población año 2020 </th><td>' + this.config.pobSelect20 + '</td></tr><tr><th>Población año 2019 </th><td>' + this.config.pobSelect19 + '</td></tr><tr><th>Población año 2018 </th><td>' + this.config.pobSelect18 + '</td></tr></table></div>'
+      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + ' Km²</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + ' Km</td></tr><tr><th>Población año ' + this.config.pobYear + ' </th><td>' + this.config.pobSelect + '</td></tr><tr><th>Densidad de población año ' + this.config.pobYear + ' </th><td>' + densidad + '</td></tr></table></div>'
     };
     return featureTabOpts
 
@@ -490,10 +493,10 @@ export default class MunpanelControl extends M.Control {
     }
     superficie = Math.round(superficie) / 1000000;
     superficie = superficie.toFixed(2);
-    superficie = superficie + ' Km²';
+
     perimetro = Math.round(perimetro) / 1000;
     perimetro = perimetro.toFixed(2);
-    perimetro = perimetro + ' Km';
+
 
 
     return [superficie, perimetro];
@@ -731,6 +734,49 @@ export default class MunpanelControl extends M.Control {
       }
     }
     return listaPoblacion;
+  }
+
+  consultaPoblacion(year) {
+    const requestPoblacion = new XMLHttpRequest();
+    requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
+    requestPoblacion.responseType = 'json';
+    requestPoblacion.send();
+
+    requestPoblacion.onload = () => {
+      var PoblacionJson = requestPoblacion.response;
+      let t = 0;
+      for (let i = 0; i < PoblacionJson.data.length; i++) {
+
+        if (PoblacionJson.data[i][1].des == year) {
+          this.config.listPoblacion[2 * t] = PoblacionJson.data[i][0].des;
+          this.config.listPoblacion[2 * t + 1] = PoblacionJson.data[i][3].format;
+          t = t + 1;
+        }
+      }
+
+      this.config.listPoblacion = this.normalizaPoblacion(this.config.listPoblacion);
+      requestPoblacion.abort();
+
+    }
+
+  }
+
+  consultaSuperavit() {
+    const requestSuperavit = new XMLHttpRequest();
+    requestSuperavit.open('GET', 'https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/1342');
+    requestSuperavit.responseType = 'json';
+    requestSuperavit.send();
+
+    requestSuperavit.onload = () => {
+      var SuperavitJson = requestSuperavit.response;
+
+      console.log(SuperavitJson);
+
+      for (let i = 0; i < SuperavitJson.data.length; i++) {
+        this.config.listSuperavit[2 * i] = SuperavitJson.data[i][0].cod.des;
+        this.config.listSuperavit[2 * i + 1] = parseFloat(SuperavitJson.data[i][2].val).toFixed(2);
+      }
+    }
   }
 
 }

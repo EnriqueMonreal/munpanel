@@ -238,9 +238,20 @@ div#controlTablas>button.g-cartografia-flecha-derecha:hover{
 
 #selectMunicipios {
   margin-left: 25%; 
-  margin-bottom: 20px;           
+  /* margin-bottom: 10px;            */
   width: 50%;
   height: 20px;
+}
+
+#selectPoblacion {
+  margin-left: 42.5%; 
+  /* margin-bottom: 10px;            */
+  width: 15%;
+  height: 20px;
+}
+div#content-panel>h3{
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #buscaMunicipio input{

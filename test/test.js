@@ -4,21 +4,6 @@ const map = M.map({
   container: 'mapjs',
 });
 
-
-
-// const terminoMunicipal = new M.layer.GeoJSON(
-//   {
-//       name: "Andalucia",
-//       url: "http://www.ideandalucia.es/services/DERA_g13_limites_administrativos/wfs?service=WFS&version=1.0.0&request=GetFeature&typename=DERA_g13_limites_administrativos%3Ag13_01_TerminoMunicipal&outputFormat=json&srsname=EPSG%3A25830&CQL_FILTER=provincia%20%3D%20'C%C3%A1diz'%20OR%20provincia%20%3D%20'M%C3%A1laga'%20OR%20provincia%20%3D%20'Granada'%20OR%20provincia%20%3D%20'Almer%C3%I1a'%20OR%20provincia%20%3D%20'Ja%C3%E1n'%20OR%20provincia%20%3D%20'C%C3%O1rdoba'%20OR%20provincia%20%3D%20'Sevilla'%20OR%20provincia%20%3D%20'Huelva'&propertyName=nombre,cod_mun,provincia,geom",
-//       extract: false
-//   }
-// );
-
-
-
-
-
-
 const Almeria = new M.layer.GeoJSON(
   {
     name: "Almeria",
@@ -221,12 +206,16 @@ const numeroTablas = 0;
 const pag = 0;
 const reg = 0;
 const result = [];
-const listPoblacion18 = [];
-const listPoblacion19 = [];
-const listPoblacion20 = [];
-const pobSelect20 ='---';
-const pobSelect19 ='---';
-const pobSelect18 ='---';
+
+const listPoblacion = [];
+const listSuperavit = [];
+const superavit = '---';
+const pobSelect ='---';
+const pobYear ='2020';
+
+const selectedFeature = {};
+const selectedProv = {};
+
 
 Almeria.setStyle(categoriaAlmeria);
 Granada.setStyle(categoriaGranada);
@@ -266,12 +255,13 @@ const configMunpanel = {
     categoriaCadiz,
     categoriaMalaga,
   ],
-  listPoblacion18:listPoblacion18,
-  listPoblacion19:listPoblacion19,
-  listPoblacion20:listPoblacion20,
-  pobSelect20:pobSelect20,
-  pobSelect19:pobSelect19,
-  pobSelect18:pobSelect18,
+  selectedFeature: selectedFeature,
+  selectedProv: selectedProv,
+  listPoblacion:listPoblacion,
+  pobYear: pobYear,
+  pobSelect:pobSelect,
+  listSuperavit: listSuperavit,
+  superavit: superavit,
   provinciaSeleccionada: provinciaSeleccionada,
   munSelect: munSelect,
   numeroTablas: numeroTablas,
