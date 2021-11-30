@@ -100,11 +100,9 @@ export default class MunpanelControl extends M.Control {
 
     //FIN CONSULTA
 
-    //this.consultaSuperavit();
+    this.consultaSuperavit();
 
-    //console.log(this.config.listSuperavit);
-
-
+    
     this.map_.on(M.evt.COMPLETED, () => {
 
       selectorProvincia.addEventListener('change', () => {
@@ -121,10 +119,10 @@ export default class MunpanelControl extends M.Control {
       });
 
       selectorYear.addEventListener('change', () => {
-        if(this.config.selectedFeature!={}){
+        if (this.config.selectedFeature != {}) {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
         }
-        
+
         if (this.map_.getPopup()) {
           this.map_.removePopup();
         }
@@ -175,9 +173,9 @@ export default class MunpanelControl extends M.Control {
             return;
           }
           this.config.selectedFeature = features[0];
-          this.config.selectedProv = this.config.layerList[i];        
-          
-         
+          this.config.selectedProv = this.config.layerList[i];
+
+
           this.borraTablas();
           this.config.pag = 0;
           this.config.reg = 0;
@@ -197,10 +195,10 @@ export default class MunpanelControl extends M.Control {
             this.creaSelect('Todas');
             this.cambiaSelect(this.config.munSelect);
           }
-          
+
         });
       }
-     
+
     });
   }
 
@@ -375,6 +373,18 @@ export default class MunpanelControl extends M.Control {
       this.config.pobSelect = '---';
     }
 
+    encontrado = false;
+
+    for (let i = 0; i < this.config.listSuperavit.length; i++) {
+      if (this.config.listSuperavit[i] == mun) {
+        this.config.superavit = this.config.listSuperavit[i + 1] + ' €';
+        encontrado = true;
+      }
+    }
+    if ((encontrado == false) || (this.config.superavit.length < 3)) {
+      this.config.superavit = '---';
+    }
+
     for (let i = 0; i < this.config.layerList.length; i++) {
       this.config.layerList[i].setStyle(this.config.styleList[i]);
       if ((this.config.layerList[i].getImpl().name == prov) || (prov == 'Todas')) {
@@ -398,7 +408,8 @@ export default class MunpanelControl extends M.Control {
 
             param_mun[2].addTab(this.popupTabContent(prov, muni));
             this.addPopupFeature(param_mun[2], param_mun[0], param_mun[1]);
-            this.map_.setCenter([this.centroide(muni)[0], this.centroide(muni)[1]]);
+            this.map_.setCenter({ x: this.centroide(muni)[0], y: this.centroide(muni)[1], draw: false });
+            //this.map_.setCenter([this.centroide(muni)[0], this.centroide(muni)[1]]);
             this.cambiaSelect(mun);
           }
         }
@@ -439,15 +450,15 @@ export default class MunpanelControl extends M.Control {
     let cod_mun = feature.getAttribute('cod_mun');
     let superficie = this.superficieMunicipio(feature)[0];
     let perimetro = this.superficieMunicipio(feature)[1];
-    let densidad ='---';
-    if(this.config.pobSelect != '---'){
+    let densidad = '---';
+    if (this.config.pobSelect != '---') {
       densidad = (parseFloat(this.config.pobSelect) / superficie).toFixed(2);
       densidad = densidad + ' hab./Km²';
     }
     featureTabOpts = {
       'icon': 'g-cartografia-pin',
       'title': 'Municipio de ' + layerName,
-      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + ' Km²</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + ' Km</td></tr><tr><th>Población año ' + this.config.pobYear + ' </th><td>' + this.config.pobSelect + '</td></tr><tr><th>Densidad de población año ' + this.config.pobYear + ' </th><td>' + densidad + '</td></tr></table></div>'
+      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + ' Km²</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + ' Km</td></tr><tr><th>Población año ' + this.config.pobYear + ' </th><td>' + this.config.pobSelect + '</td></tr><tr><th>Densidad de población año ' + this.config.pobYear + ' </th><td>' + densidad + '</td></tr><tr><th>Superávit último ejercicio</th><td>' + this.config.superavit + '</td></tr></table></div>'
     };
     return featureTabOpts
 
@@ -458,14 +469,15 @@ export default class MunpanelControl extends M.Control {
     let geometria = [];
 
 
+
     for (let i = 0; i < municipio.getGeometry().coordinates.length; i++) {      //recoge el numero de tramos poligonales
-      for (let t = 0; t < municipio.getGeometry().coordinates[i][0].length; t++) {    //recorre el numero de tramos poligonales
+      for (let t = 0; t < (municipio.getGeometry().coordinates[i][0].length - 1); t++) {    //recorre el numero de tramos poligonales ( poligonal cerrada por eso -1 )
         geometria = geometria.concat(municipio.getGeometry().coordinates[i][0][t]);
       }
 
     }
 
-    for (let i = 0; i < geometria.length / 2; i++) {
+    for (let i = 0; i < (geometria.length / 2); i++) {
       centro[0] = centro[0] + geometria[i * 2];
       centro[1] = centro[1] + geometria[i * 2 + 1];
     }
@@ -763,17 +775,16 @@ export default class MunpanelControl extends M.Control {
 
   consultaSuperavit() {
     const requestSuperavit = new XMLHttpRequest();
-    requestSuperavit.open('GET', 'https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/1342');
+    requestSuperavit.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/1342');
     requestSuperavit.responseType = 'json';
     requestSuperavit.send();
 
     requestSuperavit.onload = () => {
       var SuperavitJson = requestSuperavit.response;
 
-      console.log(SuperavitJson);
-
+      
       for (let i = 0; i < SuperavitJson.data.length; i++) {
-        this.config.listSuperavit[2 * i] = SuperavitJson.data[i][0].cod.des;
+        this.config.listSuperavit[2 * i] = SuperavitJson.data[i][0].des;
         this.config.listSuperavit[2 * i + 1] = parseFloat(SuperavitJson.data[i][2].val).toFixed(2);
       }
     }
