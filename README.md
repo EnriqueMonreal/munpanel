@@ -178,16 +178,7 @@ const estiloHuelva = new M.style.Polygon({
   }
 });
 
-const categoriaTerminoMunicipal = new M.style.Category("provincia", {
-  "Cádiz": estiloCadiz,
-  "Málaga": estiloMalaga,
-  "Granada": estiloGranada,
-  "Almería": estiloAlmeria,
-  "Jaén": estiloJaen,
-  "Córdoba": estiloCordoba,
-  "Sevilla": estiloSevilla,
-  "Huelva": estiloHuelva
-});
+
 
 const categoriaCadiz = new M.style.Category("provincia", {
   "Cádiz": estiloCadiz

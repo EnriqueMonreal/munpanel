@@ -68,41 +68,17 @@ export default class MunpanelControl extends M.Control {
     const botonAvance = html.querySelectorAll('button#botonAvance')[0];
     const tablaResultados = html.querySelectorAll('table#TablaResultados')[0];
     const selectorYear = html.querySelectorAll('select#selectPoblacion')[0];
+    const selectorRegimen = html.querySelectorAll('select#selectRegimenAfiliacion')[0];
+    const selectorSexo = html.querySelectorAll('select#selectSexoAfiliacion')[0];
+    const selectorSuperavit = html.querySelectorAll('input#checkSuperavit')[0];
 
+    // this.consultaSuperavit();
 
-    //CONSULTA DATOS DE POBLACION AÑOS 2020
-    const requestPoblacion = new XMLHttpRequest();
-    requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
-    requestPoblacion.responseType = 'json';
-    requestPoblacion.send();
-
-
-
-    requestPoblacion.onload = () => {
-      var PoblacionJson = requestPoblacion.response;
-
-      let t = 0;
-
-      for (let i = 0; i < PoblacionJson.data.length; i++) {
-
-        if (PoblacionJson.data[i][1].des == this.config.pobYear) {
-          this.config.listPoblacion[2 * t] = PoblacionJson.data[i][0].des;
-          this.config.listPoblacion[2 * t + 1] = PoblacionJson.data[i][3].format;
-          t = t + 1;
-        }
-      }
-
-      this.config.listPoblacion = this.normalizaPoblacion(this.config.listPoblacion);
-      requestPoblacion.abort();
-    }
+    // this.consultaSegSocial(selectorRegimen.value, selectorSexo.value);
 
 
 
-    //FIN CONSULTA
 
-    this.consultaSuperavit();
-
-    
     this.map_.on(M.evt.COMPLETED, () => {
 
       selectorProvincia.addEventListener('change', () => {
@@ -119,7 +95,7 @@ export default class MunpanelControl extends M.Control {
       });
 
       selectorYear.addEventListener('change', () => {
-        if (this.config.selectedFeature != {}) {
+        if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
         }
 
@@ -129,8 +105,122 @@ export default class MunpanelControl extends M.Control {
         for (let i = 0; i < this.config.layerList.length; i++) {
           this.config.layerList[i].setStyle(this.config.styleList[i]);
         }
+
+        selectorSexo.style.marginBottom = '0px';
+
+        document.getElementById('controlCarga').style.display = 'block';
+
+        if (selectorYear.value != '') {
+          this.config.status.opcPoblacion = 'false';
+        } else {
+          this.config.status.opcPoblacion = 'true';
+        }
         this.config.pobYear = selectorYear.value;
         this.consultaPoblacion(this.config.pobYear);
+
+
+      });
+
+      selectorRegimen.addEventListener('change', () => {
+        if (this.config.selectedFeature != '') {
+          this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+        }
+
+        if (this.map_.getPopup()) {
+          this.map_.removePopup();
+        }
+
+        for (let i = 0; i < this.config.layerList.length; i++) {
+          this.config.layerList[i].setStyle(this.config.styleList[i]);
+        }
+
+
+
+        if (selectorRegimen.value != '') {
+          selectorSexo.style.marginBottom = '0px';
+          document.getElementById('controlCarga').style.display = 'block';
+          selectorSexo.item(1).selected = 'selected';
+        } else {
+          selectorSexo.item(0).selected = 'selected';
+        }
+
+        if ((selectorRegimen.value != '') && (selectorSexo.value != '')) {
+          this.config.status.opcSegsocial = 'false';
+        } else {
+          this.config.status.opcSegsocial = 'true';
+        }
+        this.config.ssRegimen = selectorRegimen.value;
+        this.config.ssSexo = selectorSexo.value;
+        this.config.listSegsocial = [];
+
+
+        this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
+
+
+      });
+
+      selectorSexo.addEventListener('change', () => {
+
+        if (this.config.selectedFeature != '') {
+          this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+        }
+
+        if (this.map_.getPopup()) {
+          this.map_.removePopup();
+        }
+
+        for (let i = 0; i < this.config.layerList.length; i++) {
+          this.config.layerList[i].setStyle(this.config.styleList[i]);
+        }
+
+
+
+        if (selectorSexo.value != '') {
+          selectorSexo.style.marginBottom = '0px';
+          document.getElementById('controlCarga').style.display = 'block';
+          selectorRegimen.item(1).selected = 'selected';
+        } else {
+          selectorRegimen.item(0).selected = 'selected';
+        }
+
+        if ((selectorRegimen.value != '') && (selectorSexo.value != '')) {
+          this.config.status.opcSegsocial = 'false';
+        } else {
+          this.config.status.opcSegsocial = 'true';
+        }
+
+        this.config.ssRegimen = selectorRegimen.value;
+        this.config.ssSexo = selectorSexo.value;
+        this.config.listSegsocial = [];
+
+
+        this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
+      });
+
+      selectorSuperavit.addEventListener('change', () => {
+        if (this.config.selectedFeature != '') {
+          this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+        }
+
+        if (this.map_.getPopup()) {
+          this.map_.removePopup();
+        }
+
+        for (let i = 0; i < this.config.layerList.length; i++) {
+          this.config.layerList[i].setStyle(this.config.styleList[i]);
+        }
+
+
+
+        if (selectorSuperavit.checked) {
+          selectorSexo.style.marginBottom = '0px';
+          document.getElementById('controlCarga').style.display = 'block';
+          this.config.status.opcSuperavit = true;
+          this.consultaSuperavit();
+        } else {
+          this.config.status.opcSuperavit = false;
+        }
+
       });
 
       buscadorMunicipio.addEventListener('keydown', (e) => {
@@ -355,8 +445,29 @@ export default class MunpanelControl extends M.Control {
     if (this.map_.getPopup()) {
       this.map_.removePopup();
     }
+    let go = true;
 
-    this.buscaMunicipio(Munic, Provi);
+    if (this.config.status.opcPoblacion) {
+      if (!this.config.status.stPoblacion) {
+        go = false;
+      }
+    }
+    if (this.config.status.opcSuperavit) {
+      if (!this.config.status.stSuperavit) {
+        go = false;
+      }
+    }
+    if (this.config.status.opcSegsocial) {
+      if (!this.config.status.stSegsocial) {
+        go = false;
+      }
+    }
+
+
+    if (go) {
+
+      this.buscaMunicipio(Munic, Provi);
+    }
   }
 
   buscaMunicipio(mun, prov) {
@@ -377,13 +488,64 @@ export default class MunpanelControl extends M.Control {
 
     for (let i = 0; i < this.config.listSuperavit.length; i++) {
       if (this.config.listSuperavit[i] == mun) {
-        this.config.superavit = this.config.listSuperavit[i + 1] + ' €';
+        this.config.superavit = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(this.config.listSuperavit[i + 1]);
         encontrado = true;
       }
     }
     if ((encontrado == false) || (this.config.superavit.length < 3)) {
       this.config.superavit = '---';
     }
+
+    encontrado = false;
+    if (this.config.ssSexo == 'Hombres') {
+      for (let i = 0; i < this.config.listSegsocial.length; i++) {
+        if (this.config.listSegsocial[i] == mun) {
+          this.config.ssHombres = this.config.listSegsocial[i + 1];
+          encontrado = true;
+        }
+      }
+      if (encontrado == false) {
+        this.config.ssHombres = '---';
+      }
+    }
+    if (this.config.ssSexo == 'Mujeres') {
+      for (let i = 0; i < this.config.listSegsocial.length; i++) {
+        if (this.config.listSegsocial[i] == mun) {
+          this.config.ssMujeres = this.config.listSegsocial[i + 1];
+          encontrado = true;
+        }
+      }
+      if (encontrado == false) {
+        this.config.ssMujeres = '---';
+      }
+    }
+    if (this.config.ssSexo == 'Ambos sexos') {
+      for (let i = 0; i < this.config.listSegsocial.length; i++) {
+        if (this.config.listSegsocial[i] == mun) {
+          this.config.ssAmbos = this.config.listSegsocial[i + 1];
+          encontrado = true;
+        }
+      }
+      if (encontrado == false) {
+        this.config.ssAmbos = '---';
+      }
+    }
+    if (this.config.ssSexo == 'Ambos sexos disgregados') {
+      for (let i = 0; i < this.config.listSegsocial.length; i++) {
+        if (this.config.listSegsocial[i] == mun) {
+          this.config.ssHombres = this.config.listSegsocial[i + 1];
+          this.config.ssMujeres = this.config.listSegsocial[i + 2];
+          this.config.ssAmbos = this.config.listSegsocial[i + 3];
+          encontrado = true;
+        }
+      }
+      if (encontrado == false) {
+        this.config.ssHombres = '---';
+        this.config.ssMujeres = '---';
+        this.config.ssAmbos = '---';
+      }
+    }
+
 
     for (let i = 0; i < this.config.layerList.length; i++) {
       this.config.layerList[i].setStyle(this.config.styleList[i]);
@@ -441,6 +603,8 @@ export default class MunpanelControl extends M.Control {
       }
       document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
       this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+      this.config.selectedFeature = '';
+      this.config.selectedProv = '';
     });
   }
 
@@ -451,14 +615,41 @@ export default class MunpanelControl extends M.Control {
     let superficie = this.superficieMunicipio(feature)[0];
     let perimetro = this.superficieMunicipio(feature)[1];
     let densidad = '---';
+    let ss = '';
+    let pob = '';
+    let superavit = '';
     if (this.config.pobSelect != '---') {
       densidad = (parseFloat(this.config.pobSelect) / superficie).toFixed(2);
-      densidad = densidad + ' hab./Km²';
+
+      densidad = densidad.replace('.', ',') + ' hab./Km²';
     }
+
+    if (this.config.ssSexo == 'Hombres') {
+      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Hombres</th><td>' + this.config.ssHombres + '</td></tr></table>';
+    }
+    if (this.config.ssSexo == 'Mujeres') {
+      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Mujeres</th><td>' + this.config.ssMujeres + '</td></tr></table>';
+    }
+    if (this.config.ssSexo == 'Ambos sexos') {
+      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Ambos sexos</th><td>' + this.config.ssAmbos + '</td></tr></table>';
+    }
+    if (this.config.ssSexo == 'Ambos sexos disgregados') {
+      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Hombres</th><td>' + this.config.ssHombres + '</td></tr><tr><th>Mujeres</th><td>' + this.config.ssMujeres + '</td></tr><tr><th>Ambos sexos</th><td>' + this.config.ssAmbos + '</td></tr></table>';
+    }
+
+    if (this.config.pobYear != '') {
+      pob = '<tr><th>Población año ' + this.config.pobYear + ' </th><td>' + this.config.pobSelect + '</td></tr><tr><th>Densidad de población año ' + this.config.pobYear + ' </th><td>' + densidad + '</td></tr><tr></tr>';
+    }
+
+    if (this.config.status.opcSuperavit) {
+      superavit = '<tr><th>Superávit/Déficit <br> último ejercicio</th><td>' + this.config.superavit + '</td></tr>'
+    }
+
+
     featureTabOpts = {
       'icon': 'g-cartografia-pin',
       'title': 'Municipio de ' + layerName,
-      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + ' Km²</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + ' Km</td></tr><tr><th>Población año ' + this.config.pobYear + ' </th><td>' + this.config.pobSelect + '</td></tr><tr><th>Densidad de población año ' + this.config.pobYear + ' </th><td>' + densidad + '</td></tr><tr><th>Superávit último ejercicio</th><td>' + this.config.superavit + '</td></tr></table></div>'
+      'content': '<div style="text-align: center"><table class="list_feat"><tr><th> Nombre </th><td>' + nombre + '</td></tr><tr><th>Codigo municipio </th><td>' + cod_mun + '</td></tr><tr><th>Superficie</th><td>' + superficie + ' Km²</td></tr></tr><tr><th>Perímetro</th><td>' + perimetro + ' Km</td></tr>' + pob + '</td></tr>' + superavit + '</table>' + ss + '</div>'
     };
     return featureTabOpts
 
@@ -593,7 +784,7 @@ export default class MunpanelControl extends M.Control {
 
     this.config.pag = 0;
 
-    this.config.numeroTablas = parseInt(this.config.reg / 15) + 1;
+    this.config.numeroTablas = parseInt(this.config.reg / this.config.num_results) + 1;
 
     this.creaTabla();
 
@@ -641,13 +832,19 @@ export default class MunpanelControl extends M.Control {
   }
 
   creaTabla() {
-    for (let i = (this.config.pag * 15); i < (this.config.pag * 15 + 15); i++) {
+    for (let i = (this.config.pag * this.config.num_results); i < (this.config.pag * this.config.num_results + this.config.num_results); i++) {
       if (i < this.config.reg) {
         document.getElementById('TablaResultados').getElementsByTagName('tbody')[0].insertRow(-1).innerHTML = '<tr><th>' + this.config.result[i * 2] + '</th><th>' + this.config.result[i * 2 + 1] + '</th></tr>';
       }
     }
-    document.getElementById('TablaResultados').className = 'TablaResultados';
 
+    document.getElementById('TablaResultados').className = 'TablaResultados';
+    document.getElementById('paginado').style.display = 'block';
+    if ((this.config.pag * this.config.num_results + this.config.num_results) < this.config.reg) {
+      document.getElementById('paginado').innerHTML = 'Resultados ' + (this.config.pag * this.config.num_results + 1) + ' a ' + (this.config.pag * this.config.num_results + this.config.num_results) + ' de ' + this.config.reg + '';
+    } else {
+      document.getElementById('paginado').innerHTML = 'Resultados ' + (this.config.pag * this.config.num_results + 1) + ' a ' + this.config.reg + ' de ' + this.config.reg + '';
+    }
   }
 
   retrocedeTabla() {
@@ -686,6 +883,7 @@ export default class MunpanelControl extends M.Control {
     document.getElementById('controlTablas').style.display = 'none';
     document.getElementById('resulBus').innerHTML = '';
     document.getElementById('selectMunicipios').options.item(0).selected = 'selected';
+    document.getElementById('paginado').style.display = 'none';
     if (this.map_.getPopup()) {
       this.map_.removePopup();
     }
@@ -714,20 +912,8 @@ export default class MunpanelControl extends M.Control {
     this.config.result = [];
   }
 
-  cargaPoblacion() {
-    const requestPoblacion = new XMLHttpRequest();
-    requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
-    requestPoblacion.responseType = 'json';
-    requestPoblacion.send();
-    var Poblacion = null;
-    do {
-      Poblacion = requestPoblacion.response;
-      console.log(Poblacion);
-    } while (Poblacion == null);
-    return Poblacion;
-  }
 
-  normalizaPoblacion(listaPoblacion) {
+  normalizaMunicipio(listaPoblacion) {
     for (let i = 0; i < listaPoblacion.length; i++) {
       if (listaPoblacion[i].indexOf('(El)') !== -1) {
         listaPoblacion[i] = 'El ' + listaPoblacion[i].slice(0, listaPoblacion[i].indexOf(' (El)'));
@@ -749,6 +935,7 @@ export default class MunpanelControl extends M.Control {
   }
 
   consultaPoblacion(year) {
+    this.config.status.stPoblacion = false;
     const requestPoblacion = new XMLHttpRequest();
     requestPoblacion.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/6780');
     requestPoblacion.responseType = 'json';
@@ -766,7 +953,14 @@ export default class MunpanelControl extends M.Control {
         }
       }
 
-      this.config.listPoblacion = this.normalizaPoblacion(this.config.listPoblacion);
+      this.config.listPoblacion = this.normalizaMunicipio(this.config.listPoblacion);
+      if (requestPoblacion.status == 200) {
+        document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+        document.getElementById('controlCarga').style.display = 'none';
+        this.representaPoblacion();
+        this.config.status.stPoblacion = true;
+      }
+
       requestPoblacion.abort();
 
     }
@@ -774,6 +968,7 @@ export default class MunpanelControl extends M.Control {
   }
 
   consultaSuperavit() {
+    this.config.status.stSuperavit = false;
     const requestSuperavit = new XMLHttpRequest();
     requestSuperavit.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/1342');
     requestSuperavit.responseType = 'json';
@@ -782,11 +977,184 @@ export default class MunpanelControl extends M.Control {
     requestSuperavit.onload = () => {
       var SuperavitJson = requestSuperavit.response;
 
-      
+
       for (let i = 0; i < SuperavitJson.data.length; i++) {
         this.config.listSuperavit[2 * i] = SuperavitJson.data[i][0].des;
         this.config.listSuperavit[2 * i + 1] = parseFloat(SuperavitJson.data[i][2].val).toFixed(2);
       }
+      this.config.listSuperavit = this.normalizaMunicipio(this.config.listSuperavit);
+      if (requestSuperavit.status == 200) {
+        document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+        document.getElementById('controlCarga').style.display = 'none';
+        this.config.status.stSuperavit = true;
+      }
+      requestSuperavit.abort();
+    }
+
+  }
+
+  consultaSegSocial(regimen, sexo) {
+
+    this.config.status.stSegsocial = false;
+
+    const requestSegsocial = new XMLHttpRequest();
+    requestSegsocial.open('GET', 'https://www.ieca.junta-andalucia.es/intranet/admin/rest/v1.0/consulta/49400');
+    requestSegsocial.responseType = 'json';
+    requestSegsocial.send();
+
+
+    requestSegsocial.onload = () => {
+      var SegsocialJson = requestSegsocial.response;
+      let t = 0;
+
+      this.config.ssYear = SegsocialJson.data[0][3].des;
+
+      document.getElementById('tituloSS').innerHTML = 'Afiliación Seg. Social ' + this.config.ssYear;
+
+
+
+      if (sexo != 'Ambos sexos disgregados') {
+        for (let i = 0; i < SegsocialJson.data.length; i++) {
+          if ((SegsocialJson.data[i][1].des == regimen) && (SegsocialJson.data[i][2].des == sexo)) {
+            this.config.listSegsocial[2 * t] = SegsocialJson.data[i][0].des;
+            if ((SegsocialJson.data[i][4].format != '*') && (SegsocialJson.data[i][4].format != '')) {
+              this.config.listSegsocial[2 * t + 1] = SegsocialJson.data[i][4].format;
+            }
+            if (SegsocialJson.data[i][4].format == '*') {
+              this.config.listSegsocial[2 * t + 1] = '< 5'
+            }
+            if (SegsocialJson.data[i][4].format == '') {
+              this.config.listSegsocial[2 * t + 1] = '---';
+            }
+            t = t + 1;
+          }
+        }
+      }
+
+      if (sexo == 'Ambos sexos disgregados') {
+        t = 0;
+
+        for (let i = 0; i < SegsocialJson.data.length; i++) {
+
+          if ((SegsocialJson.data[i][1].des == regimen) && (SegsocialJson.data[i][2].des == 'Hombres')) {
+            this.config.listSegsocial[t] = SegsocialJson.data[i][0].des; // municipio
+            t = t + 1;
+
+            this.config.listSegsocial[t] = SegsocialJson.data[i][4].format;  //hombres
+            if (this.config.listSegsocial[t] == '*') { this.config.listSegsocial[t] = '< 5' }
+            if (this.config.listSegsocial[t] == '') { this.config.listSegsocial[t] = '---' }
+            t = t + 1;
+
+            this.config.listSegsocial[t] = SegsocialJson.data[i + 1][4].format;   //mujeres
+            if (this.config.listSegsocial[t] == '*') { this.config.listSegsocial[t] = '< 5' }
+            if (this.config.listSegsocial[t] == '') { this.config.listSegsocial[t] = '---' }
+            t = t + 1;
+
+            this.config.listSegsocial[t] = SegsocialJson.data[i + 2][4].format;   //ambos
+            if (this.config.listSegsocial[t] == '*') { this.config.listSegsocial[t] = '< 5' }
+            if (this.config.listSegsocial[t] == '') { this.config.listSegsocial[t] = '---' }
+            t = t + 1;
+
+          }
+        }
+
+      }
+      this.config.listSegsocial = this.normalizaMunicipio(this.config.listSegsocial);
+
+      if (requestSegsocial.status == 200) {
+        document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+        document.getElementById('controlCarga').style.display = 'none';
+        this.config.status.stSegsocial = true;
+      }
+
+      requestSegsocial.abort();
+
+    }
+
+  }
+
+  representaPoblacion() {
+    for (let i = 0; i < this.config.layerList.length; i++) {
+      for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
+        for (let j = 0; j < this.config.listPoblacion.length; j = j + 2) {
+          if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listPoblacion[j]) {
+            let pob = Number(this.config.listPoblacion[j + 1].replace('.', ''));
+            //console.log(this.config.layerList[i].getFeatures()[t].getAttribute('nombre') + '=' + pob);
+            if (pob <= 1000) {
+              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
+                fill: {
+                  color: '#a6b0da',
+                  opacity: 0.8,
+                },
+                stroke: {
+                  color: '#0c0c0c',
+                  width: 1 
+                }
+              }));
+            }
+            if ((pob > 1000)&&(pob<=5000)) {
+              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
+                fill: {
+                  color: '#7282c0',
+                  opacity: 0.8,
+                },
+                stroke: {
+                  color: '#0c0c0c',
+                  width: 1 
+                }
+              }));
+            }
+            if ((pob > 5000)&&(pob<=10000)) {
+              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
+                fill: {
+                  color: '#4559a8',
+                  opacity: 0.8,
+                },
+                stroke: {
+                  color: '#0c0c0c',
+                  width: 1 
+                }
+              }));
+            }
+            if ((pob > 10000)&&(pob<=50000)) {
+              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
+                fill: {
+                  color: '#21337e',
+                  opacity: 0.8,
+                },
+                stroke: {
+                  color: '#0c0c0c',
+                  width: 1 
+                }
+              }));
+            }
+            if ((pob > 50000)&&(pob<=100000)) {
+              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
+                fill: {
+                  color: '#09174b',
+                  opacity: 0.8,
+                },
+                stroke: {
+                  color: '#0c0c0c',
+                  width: 1 
+                }
+              }));
+            }
+            if (pob > 100000) {
+              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
+                fill: {
+                  color: '#010513',
+                  opacity: 0.8,
+                },
+                stroke: {
+                  color: '#0c0c0c',
+                  width: 1 
+                }
+              }));
+            }
+          }
+        }
+      }      
     }
   }
 

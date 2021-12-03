@@ -2,6 +2,7 @@ import Munpanel from 'facade/munpanel';
 
 const map = M.map({
   container: 'mapjs',
+  
 });
 
 const Almeria = new M.layer.GeoJSON(
@@ -157,16 +158,72 @@ const estiloHuelva = new M.style.Polygon({
   }
 });
 
-const categoriaTerminoMunicipal = new M.style.Category("provincia", {
-  "Cádiz": estiloCadiz,
-  "Málaga": estiloMalaga,
-  "Granada": estiloGranada,
-  "Almería": estiloAlmeria,
-  "Jaén": estiloJaen,
-  "Córdoba": estiloCordoba,
-  "Sevilla": estiloSevilla,
-  "Huelva": estiloHuelva
-});
+
+// const pob_1000 = new M.style.Polygon({
+//   fill: {
+//     color: '#a6b0da',
+//     opacity: 0.5,
+//   },
+//   stroke: {
+//     color: '#0c0c0c',
+//     width: 1 
+//   }
+// });
+
+// const pob1000_5000 = new M.style.Polygon({
+//   fill: {
+//     color: '#7282c0',
+//     opacity: 0.5,
+//   },
+//   stroke: {
+//     color: '#0c0c0c',
+//     width: 1 
+//   }
+// });
+
+// const pob5000_10000 = new M.style.Polygon({
+//   fill: {
+//     color: '#4559a8',
+//     opacity: 0.5,
+//   },
+//   stroke: {
+//     color: '#0c0c0c',
+//     width: 1 
+//   }
+// });
+
+// const pob10000_50000 = new M.style.Polygon({
+//   fill: {
+//     color: '#21337e',
+//     opacity: 0.5,
+//   },
+//   stroke: {
+//     color: '#0c0c0c',
+//     width: 1 
+//   }
+// });
+
+// const pob50000_100000 = new M.style.Polygon({
+//   fill: {
+//     color: '#09174b',
+//     opacity: 0.5,
+//   },
+//   stroke: {
+//     color: '#0c0c0c',
+//     width: 1 
+//   }
+// });
+
+// const pob100000_ = new M.style.Polygon({
+//   fill: {
+//     color: '#010513',
+//     opacity: 0.5,
+//   },
+//   stroke: {
+//     color: '#0c0c0c',
+//     width: 1 
+//   }
+// });
 
 const categoriaCadiz = new M.style.Category("provincia", {
   "Cádiz": estiloCadiz
@@ -205,16 +262,31 @@ const provinciaSeleccionada = 'Select';
 const numeroTablas = 0;
 const pag = 0;
 const reg = 0;
+const num_results = 10;
 const result = [];
 
 const listPoblacion = [];
 const listSuperavit = [];
+const listSegsocial = [];
 const superavit = '---';
+const ssHombres = '---';
+const ssMujeres = '---';
+const ssAmbos = '---';
 const pobSelect ='---';
-const pobYear ='2020';
+const pobYear ='';
+const ssYear = '';
+const ssRegimen = '';
+const ssSexo = '';
+const stPoblacion = false;
+const stSuperavit = false;
+const stSegsocial = false;
+const opcPoblacion = false;
+const opcSuperavit = false;
+const opcSegsocial = false;
 
-const selectedFeature = {};
-const selectedProv = {};
+
+const selectedFeature = '';
+const selectedProv = '';
 
 
 Almeria.setStyle(categoriaAlmeria);
@@ -255,6 +327,14 @@ const configMunpanel = {
     categoriaCadiz,
     categoriaMalaga,
   ],
+  // stylePobList:[
+  //   pob_1000,
+  //   pob1000_5000,
+  //   pob5000_10000,
+  //   pob10000_50000,
+  //   pob50000_100000,
+  //   pob100000_,
+  // ],
   selectedFeature: selectedFeature,
   selectedProv: selectedProv,
   listPoblacion:listPoblacion,
@@ -262,12 +342,28 @@ const configMunpanel = {
   pobSelect:pobSelect,
   listSuperavit: listSuperavit,
   superavit: superavit,
+  listSegsocial: listSegsocial,
+  ssRegimen: ssRegimen,
+  ssSexo: ssSexo,
+  ssYear: ssYear,
+  ssHombres: ssHombres,
+  ssMujeres: ssMujeres,
+  ssAmbos: ssAmbos, 
   provinciaSeleccionada: provinciaSeleccionada,
   munSelect: munSelect,
   numeroTablas: numeroTablas,
   pag: pag,
   reg: reg,
-  result: result
+  result: result,
+  num_results:num_results,
+  status:{
+    stSegsocial:stSegsocial,
+    stSuperavit:stSuperavit,
+    stPoblacion:stPoblacion,
+    opcPoblacion:opcPoblacion,
+    opcSuperavit: opcSuperavit,
+    opcSegsocial: opcSegsocial
+  }
 }
 
 const mp_munpanel = new Munpanel(configMunpanel);

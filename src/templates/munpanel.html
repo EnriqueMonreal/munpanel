@@ -23,9 +23,12 @@
                         municipio</option>
 
                 </select>
+                
+                <hr>
                 <h3 class='tituloSelect'>Datos de Población</h3>
                 <select name='poblacion' id='selectPoblacion'>
-                    <option class='opPoblacion' value='2020'selected>2020</option>                    
+                    <option class='opPoblacion' value='' selected></option>
+                    <option class='opPoblacion' value='2020'>2020</option>
                     <option class='opPoblacion' value='2019'>2019</option>
                     <option class='opPoblacion' value='2018'>2018</option>
                     <option class='opPoblacion' value='2017'>2017</option>
@@ -50,6 +53,39 @@
                     <option class='opPoblacion' value='1998'>1998</option>
                     <option class='opPoblacion' value='1996'>1996</option>
                 </select>
+                
+                <div id='divSuperavit'>
+                    <label><input type="checkbox" id="checkSuperavit" value="Superavit">
+                        Superávit/Déficit último ejercicio</label>
+                </div>
+                
+                
+                <h3 class='tituloSelect' id='tituloSS'>Afiliación Seg. Social</h3>
+                <select name='regimenAfiliacion' id='selectRegimenAfiliacion'>
+                    <option class='opRegimenAfiliacion' value='' selected></option>
+                    <option class='opRegimenAfiliacion' value='Régimen General* y Carbón'>Régimen General y Carbón
+                    </option>
+                    <option class='opRegimenAfiliacion' value='Sistema Especial Agrario'>Sistema Especial Agrario
+                    </option>
+                    <option class='opRegimenAfiliacion' value='Régimen Especial Trabajadores Autónomos'>Régimen Especial
+                        Trabajadores Autónomos</option>
+                    <option class='opRegimenAfiliacion' value='Régimen Especial del Mar'>Régimen Especial del Mar
+                    </option>
+                    <option class='opRegimenAfiliacion'
+                        value='Régimen Especial Empleados del Hogar y R.G. Sistema Especial de Empleados del Hogar'>
+                        Régimen Especial y Sistema Especial de Empleados del Hogar</option>
+                </select>
+
+                <select name='sexoAfiliacion' id='selectSexoAfiliacion'>
+                    <option class='opSexoAfiliacion' value='' selected></option>
+                    <option class='opSexoAfiliacion' value='Hombres'>Hombres</option>
+                    <option class='opSexoAfiliacion' value='Mujeres'>Mujeres</option>
+                    <option class='opSexoAfiliacion' value='Ambos sexos'>Total</option>
+                    <option class='opSexoAfiliacion' value='Ambos sexos disgregados'>Ambos</option>
+                </select>
+                <p id='controlCarga'>Cargando datos</p>
+                <hr>
+
                 <h3 class='tituloSelect'>Buscador de Municipios</h3>
                 <form id='buscaMunicipio'>
                     <label for='busMuni'>Municipio</label>
@@ -75,6 +111,7 @@
                     <button id='botonAtras' title='Anterior' class='g-cartografia-flecha-izquierda'></button>
                     <button id='botonAvance' title='Siguiente' class='g-cartografia-flecha-derecha'></button>
                 </div>
+                <p id='paginado'>datos de busqueda</p>
                 <div id='resultadosBusqueda'>
                     <p id='resulBus'>RESULTADO BUSQUEDA</p>
                 </div>

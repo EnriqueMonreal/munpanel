@@ -31,6 +31,7 @@
 
 .m-areas>div.m-area>div.m-panel.m-munpanel>div.m-panel-controls{
   transition: none !important;
+  height: 85vh;
 }
 .m-areas>div.m-area>div.m-panel.m-munpanel.collapsed{
   height: 40px !important;
@@ -43,7 +44,7 @@
 
 .m-areas>div.m-area.m-top.m-right>div.m-panel.m-munpanel.opened{
   width:510px;
-  height: 80vh;
+  height: 85vh;
   border-radius: 0px !important;
   
 }
@@ -182,6 +183,11 @@ div#controlTablas>button.g-cartografia-flecha-derecha:hover{
   float: left;
 }
 
+#paginado{
+  text-align: center;
+  display: none;
+}
+
 #buscador-area {
   width: 550px;
   height: 80vh;
@@ -238,7 +244,7 @@ div#controlTablas>button.g-cartografia-flecha-derecha:hover{
 
 #selectMunicipios {
   margin-left: 25%; 
-  /* margin-bottom: 10px;            */
+  margin-bottom: 15px;            
   width: 50%;
   height: 20px;
 }
@@ -249,9 +255,67 @@ div#controlTablas>button.g-cartografia-flecha-derecha:hover{
   width: 15%;
   height: 20px;
 }
+
+#selectRegimenAfiliacion {
+  margin-left: 12.5%; 
+  /* margin-bottom: 10px;            */
+  width: 75%;
+  height: 20px; 
+}
+
+#selectSexoAfiliacion {
+  margin-left: 40%; 
+  margin-top: 10px;
+  margin-bottom: 27px;            
+  width: 20%;
+  height: 20px;
+}
+
 div#content-panel>h3{
   margin-top: 5px;
   margin-bottom: 5px;
+}
+div.pop_feat>div.m-body>div>table.list_feat>caption{
+  font-style: normal;
+  text-transform:uppercase;
+  color: #222;
+  font-size: 0.9em;
+}
+
+div#content-panel>hr{
+  height: 2px;
+  background-color:#37b6a9;
+  margin-top: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+  box-shadow: 0px 0px 5px #bbb;  
+}
+
+div#divSuperavit{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+div#divSuperavit>label{
+  font-size: 1.17em;
+  color:#000;
+  font-weight: bold;
+}
+
+#controlCarga{
+  display: none;
+  text-align: center;
+  animation-name: parpadeo;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes parpadeo {  
+  0% { opacity: 1.0; }
+   50% { opacity: 0.0; }
+  100% { opacity: 1.0; }
 }
 
 #buscaMunicipio input{
@@ -396,6 +460,8 @@ table.list_feat th{
 }
 
 table.list_feat td{
+  padding-left: 0.3em;
+  padding-right: 0.3em;
   background:#f8efe6;
   border:1px solid #fda823;
   color:#444;
