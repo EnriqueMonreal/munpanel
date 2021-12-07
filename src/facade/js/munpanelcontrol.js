@@ -108,17 +108,21 @@ export default class MunpanelControl extends M.Control {
 
         selectorSexo.style.marginBottom = '0px';
 
-        document.getElementById('controlCarga').style.display = 'block';
+        //document.getElementById('controlCarga').style.display = 'block';
 
         if (selectorYear.value != '') {
           this.config.status.opcPoblacion = 'false';
+          document.getElementById('controlCarga').style.display = 'block';
+          this.config.pobYear = selectorYear.value;
+          this.consultaPoblacion(this.config.pobYear);
+
         } else {
           this.config.status.opcPoblacion = 'true';
+          document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+          this.config.pobYear = selectorYear.value;
         }
-        this.config.pobYear = selectorYear.value;
-        this.consultaPoblacion(this.config.pobYear);
-
-
+        // this.config.pobYear = selectorYear.value;
+        // this.consultaPoblacion(this.config.pobYear);
       });
 
       selectorRegimen.addEventListener('change', () => {
@@ -262,8 +266,13 @@ export default class MunpanelControl extends M.Control {
           if (features[0] instanceof M.ClusteredFeature) {
             return;
           }
+          if(this.config.munAnterior!=''){
+            this.config.munAnterior.setStyle(this.config.stAnterior);
+          }
           this.config.selectedFeature = features[0];
           this.config.selectedProv = this.config.layerList[i];
+          this.config.munAnterior = this.config.selectedFeature;
+          this.config.stAnterior = this.config.munAnterior.getStyle();
 
 
           this.borraTablas();
@@ -548,7 +557,7 @@ export default class MunpanelControl extends M.Control {
 
 
     for (let i = 0; i < this.config.layerList.length; i++) {
-      this.config.layerList[i].setStyle(this.config.styleList[i]);
+      //this.config.layerList[i].setStyle(this.config.styleList[i]);
       if ((this.config.layerList[i].getImpl().name == prov) || (prov == 'Todas')) {
         for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
           if (this.config.layerList[i].getFeatures()[t].getImpl().getAttribute('nombre') == mun) {
@@ -598,9 +607,10 @@ export default class MunpanelControl extends M.Control {
     popup_rec.className = 'pop_feat';
 
     document.querySelectorAll('a.m-popup-closer')[0].addEventListener('click', () => {
-      for (let i = 0; i < this.config.layerList.length; i++) {
-        this.config.layerList[i].setStyle(this.config.styleList[i]);
-      }
+      // for (let i = 0; i < this.config.layerList.length; i++) {
+      //   this.config.layerList[i].setStyle(this.config.styleList[i]);
+      // }
+      this.config.munAnterior.setStyle(this.config.stAnterior);
       document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
       this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
       this.config.selectedFeature = '';
@@ -1076,6 +1086,16 @@ export default class MunpanelControl extends M.Control {
   representaPoblacion() {
     for (let i = 0; i < this.config.layerList.length; i++) {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
+        this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
+          fill: {
+            color: '#a6b0da',
+            opacity: 0.8,
+          },
+          stroke: {
+            color: '#0c0c0c',
+            width: 1
+          }
+        }));
         for (let j = 0; j < this.config.listPoblacion.length; j = j + 2) {
           if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listPoblacion[j]) {
             let pob = Number(this.config.listPoblacion[j + 1].replace('.', ''));
@@ -1088,11 +1108,11 @@ export default class MunpanelControl extends M.Control {
                 },
                 stroke: {
                   color: '#0c0c0c',
-                  width: 1 
+                  width: 1
                 }
               }));
             }
-            if ((pob > 1000)&&(pob<=5000)) {
+            if ((pob > 1000) && (pob <= 5000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#7282c0',
@@ -1100,11 +1120,11 @@ export default class MunpanelControl extends M.Control {
                 },
                 stroke: {
                   color: '#0c0c0c',
-                  width: 1 
+                  width: 1
                 }
               }));
             }
-            if ((pob > 5000)&&(pob<=10000)) {
+            if ((pob > 5000) && (pob <= 10000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#4559a8',
@@ -1112,11 +1132,11 @@ export default class MunpanelControl extends M.Control {
                 },
                 stroke: {
                   color: '#0c0c0c',
-                  width: 1 
+                  width: 1
                 }
               }));
             }
-            if ((pob > 10000)&&(pob<=50000)) {
+            if ((pob > 10000) && (pob <= 50000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#21337e',
@@ -1124,11 +1144,11 @@ export default class MunpanelControl extends M.Control {
                 },
                 stroke: {
                   color: '#0c0c0c',
-                  width: 1 
+                  width: 1
                 }
               }));
             }
-            if ((pob > 50000)&&(pob<=100000)) {
+            if ((pob > 50000) && (pob <= 100000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#09174b',
@@ -1136,7 +1156,7 @@ export default class MunpanelControl extends M.Control {
                 },
                 stroke: {
                   color: '#0c0c0c',
-                  width: 1 
+                  width: 1
                 }
               }));
             }
@@ -1148,13 +1168,13 @@ export default class MunpanelControl extends M.Control {
                 },
                 stroke: {
                   color: '#0c0c0c',
-                  width: 1 
+                  width: 1
                 }
               }));
             }
           }
         }
-      }      
+      }
     }
   }
 

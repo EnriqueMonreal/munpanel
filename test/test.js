@@ -2,7 +2,7 @@ import Munpanel from 'facade/munpanel';
 
 const map = M.map({
   container: 'mapjs',
-  
+
 });
 
 const Almeria = new M.layer.GeoJSON(
@@ -272,8 +272,8 @@ const superavit = '---';
 const ssHombres = '---';
 const ssMujeres = '---';
 const ssAmbos = '---';
-const pobSelect ='---';
-const pobYear ='';
+const pobSelect = '---';
+const pobYear = '';
 const ssYear = '';
 const ssRegimen = '';
 const ssSexo = '';
@@ -283,6 +283,9 @@ const stSegsocial = false;
 const opcPoblacion = false;
 const opcSuperavit = false;
 const opcSegsocial = false;
+
+const stAnterior = false;
+const munAnterior = false;
 
 
 const selectedFeature = '';
@@ -337,9 +340,9 @@ const configMunpanel = {
   // ],
   selectedFeature: selectedFeature,
   selectedProv: selectedProv,
-  listPoblacion:listPoblacion,
+  listPoblacion: listPoblacion,
   pobYear: pobYear,
-  pobSelect:pobSelect,
+  pobSelect: pobSelect,
   listSuperavit: listSuperavit,
   superavit: superavit,
   listSegsocial: listSegsocial,
@@ -348,19 +351,21 @@ const configMunpanel = {
   ssYear: ssYear,
   ssHombres: ssHombres,
   ssMujeres: ssMujeres,
-  ssAmbos: ssAmbos, 
+  ssAmbos: ssAmbos,
   provinciaSeleccionada: provinciaSeleccionada,
   munSelect: munSelect,
   numeroTablas: numeroTablas,
   pag: pag,
   reg: reg,
   result: result,
-  num_results:num_results,
-  status:{
-    stSegsocial:stSegsocial,
-    stSuperavit:stSuperavit,
-    stPoblacion:stPoblacion,
-    opcPoblacion:opcPoblacion,
+  num_results: num_results,
+  stAnterior: stAnterior,
+  munAnterior: munAnterior,
+  status: {
+    stSegsocial: stSegsocial,
+    stSuperavit: stSuperavit,
+    stPoblacion: stPoblacion,
+    opcPoblacion: opcPoblacion,
     opcSuperavit: opcSuperavit,
     opcSegsocial: opcSegsocial
   }
