@@ -581,6 +581,9 @@ export default class MunpanelControl extends M.Control {
             muni = this.config.layerList[i].getFeatures()[t];
             this.config.munSelect = mun;
 
+            this.config.selectedFeature= muni;
+            this.config.selectedProv=this.config.layerList[i];
+
             this.config.munAnterior = muni;
             this.config.stAnterior = muni.getStyle();
 
@@ -632,9 +635,8 @@ export default class MunpanelControl extends M.Control {
       // }
 
 
-
       this.config.munAnterior.setStyle(this.config.stAnterior);
-      document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
+      document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';      
       this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
       this.config.selectedFeature = '';
       this.config.selectedProv = '';
