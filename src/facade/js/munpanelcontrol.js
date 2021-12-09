@@ -108,6 +108,9 @@ export default class MunpanelControl extends M.Control {
 
         selectorSexo.style.marginBottom = '0px';
 
+        this.config.stAnterior = false;   // INICIALIZAMOS VALORES
+        this.config.munAnterior = false;
+
         //document.getElementById('controlCarga').style.display = 'block';
 
         if (selectorYear.value != '') {
@@ -120,6 +123,7 @@ export default class MunpanelControl extends M.Control {
           this.config.status.opcPoblacion = 'true';
           document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
           this.config.pobYear = selectorYear.value;
+
         }
         // this.config.pobYear = selectorYear.value;
         // this.consultaPoblacion(this.config.pobYear);
@@ -253,6 +257,8 @@ export default class MunpanelControl extends M.Control {
       tablaResultados.addEventListener('click', (ev) => {
         let index = ev.target.parentElement.rowIndex;
 
+
+
         let m = document.getElementById('TablaResultados').rows[index].cells[0].innerText;
         let p = document.getElementById('TablaResultados').rows[index].cells[1].innerText;
         this.muestraProvincia(p);
@@ -266,7 +272,9 @@ export default class MunpanelControl extends M.Control {
           if (features[0] instanceof M.ClusteredFeature) {
             return;
           }
-          if(this.config.munAnterior!=''){
+
+
+          if (this.config.munAnterior != false) {
             this.config.munAnterior.setStyle(this.config.stAnterior);
           }
           this.config.selectedFeature = features[0];
@@ -274,6 +282,7 @@ export default class MunpanelControl extends M.Control {
           this.config.munAnterior = this.config.selectedFeature;
           this.config.stAnterior = this.config.munAnterior.getStyle();
 
+          document.getElementById('paginado').style.display = 'none';
 
           this.borraTablas();
           this.config.pag = 0;
@@ -355,12 +364,17 @@ export default class MunpanelControl extends M.Control {
     if (this.map_.getPopup()) {
       this.map_.removePopup();
     }
+
     let cont = this.map_.getLayers().length - 9;
+
     if (this.map_.getLayers().length > 9) {
       for (let x = 0; x < cont; x++) {
         let capaCargada = this.map_.getLayers()[8];
+
         this.map_.removeLayers(capaCargada);
+
         this.config.layerList[x].setStyle(this.config.styleList[x]);
+
       }
 
     }
@@ -386,6 +400,9 @@ export default class MunpanelControl extends M.Control {
         }
 
       }
+    }
+    if (document.getElementById('selectPoblacion').value != '') {
+      this.representaPoblacion();
     }
 
   }
@@ -564,6 +581,9 @@ export default class MunpanelControl extends M.Control {
             muni = this.config.layerList[i].getFeatures()[t];
             this.config.munSelect = mun;
 
+            this.config.munAnterior = muni;
+            this.config.stAnterior = muni.getStyle();
+
             muni.setStyle(new M.style.Polygon({
               fill: {
                 color: '#8d8d8d',
@@ -610,6 +630,9 @@ export default class MunpanelControl extends M.Control {
       // for (let i = 0; i < this.config.layerList.length; i++) {
       //   this.config.layerList[i].setStyle(this.config.styleList[i]);
       // }
+
+
+
       this.config.munAnterior.setStyle(this.config.stAnterior);
       document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
       this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
@@ -811,6 +834,7 @@ export default class MunpanelControl extends M.Control {
     if (encontrado == false) {
       document.getElementById('DivTablaResultados').style.display = 'none';
       document.getElementById('resultadosBusqueda').style.display = 'block';
+      document.getElementById('paginado').style.display = 'none';
       if ((this.config.provinciaSeleccionada != 'Todas') && (this.config.provinciaSeleccionada != 'Select')) {
         document.getElementById('resulBus').innerHTML = '"' + busquedaInicial + '"' + ' no muestra ningún resultado en la lista de municipios de ' + this.config.provinciaSeleccionada;
       } else {
@@ -894,11 +918,18 @@ export default class MunpanelControl extends M.Control {
     document.getElementById('resulBus').innerHTML = '';
     document.getElementById('selectMunicipios').options.item(0).selected = 'selected';
     document.getElementById('paginado').style.display = 'none';
+
     if (this.map_.getPopup()) {
       this.map_.removePopup();
     }
-    for (let i = 0; i < this.config.layerList.length; i++) {
-      this.config.layerList[i].setStyle(this.config.styleList[i]);
+    if (document.getElementById('selectPoblacion').value == '') {
+      for (let i = 0; i < this.config.layerList.length; i++) {
+        this.config.layerList[i].setStyle(this.config.styleList[i]);
+      }
+    }
+
+    if (document.getElementById('selectPoblacion').value != '') {
+      this.representaPoblacion();
     }
 
 
@@ -1088,7 +1119,7 @@ export default class MunpanelControl extends M.Control {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
         this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
           fill: {
-            color: '#a6b0da',
+            color: '#ecdede',
             opacity: 0.8,
           },
           stroke: {
@@ -1103,7 +1134,7 @@ export default class MunpanelControl extends M.Control {
             if (pob <= 1000) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
-                  color: '#a6b0da',
+                  color: '#ecdede',
                   opacity: 0.8,
                 },
                 stroke: {
@@ -1115,7 +1146,7 @@ export default class MunpanelControl extends M.Control {
             if ((pob > 1000) && (pob <= 5000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
-                  color: '#7282c0',
+                  color: '#cf9f9f',
                   opacity: 0.8,
                 },
                 stroke: {
@@ -1127,7 +1158,7 @@ export default class MunpanelControl extends M.Control {
             if ((pob > 5000) && (pob <= 10000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
-                  color: '#4559a8',
+                  color: '#e67777',
                   opacity: 0.8,
                 },
                 stroke: {
@@ -1139,7 +1170,7 @@ export default class MunpanelControl extends M.Control {
             if ((pob > 10000) && (pob <= 50000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
-                  color: '#21337e',
+                  color: '#ac4747',
                   opacity: 0.8,
                 },
                 stroke: {
@@ -1151,7 +1182,7 @@ export default class MunpanelControl extends M.Control {
             if ((pob > 50000) && (pob <= 100000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
-                  color: '#09174b',
+                  color: '#d62929',
                   opacity: 0.8,
                 },
                 stroke: {
@@ -1163,7 +1194,7 @@ export default class MunpanelControl extends M.Control {
             if (pob > 100000) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
-                  color: '#010513',
+                  color: '#ff0000',
                   opacity: 0.8,
                 },
                 stroke: {
