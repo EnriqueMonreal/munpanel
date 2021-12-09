@@ -72,12 +72,6 @@ export default class MunpanelControl extends M.Control {
     const selectorSexo = html.querySelectorAll('select#selectSexoAfiliacion')[0];
     const selectorSuperavit = html.querySelectorAll('input#checkSuperavit')[0];
 
-    // this.consultaSuperavit();
-
-    // this.consultaSegSocial(selectorRegimen.value, selectorSexo.value);
-
-
-
 
     this.map_.on(M.evt.COMPLETED, () => {
 
@@ -112,8 +106,7 @@ export default class MunpanelControl extends M.Control {
         this.config.munAnterior = false;
         selectorMunicipio.item(0).selected = 'selected';
 
-        //document.getElementById('controlCarga').style.display = 'block';
-
+       
         if (selectorYear.value != '') {
           this.config.status.opcPoblacion = 'false';
           document.getElementById('controlCarga').style.display = 'block';
@@ -126,8 +119,7 @@ export default class MunpanelControl extends M.Control {
           this.config.pobYear = selectorYear.value;
 
         }
-        // this.config.pobYear = selectorYear.value;
-        // this.consultaPoblacion(this.config.pobYear);
+       
       });
 
       selectorRegimen.addEventListener('change', () => {
@@ -215,9 +207,12 @@ export default class MunpanelControl extends M.Control {
           this.map_.removePopup();
         }
 
-        for (let i = 0; i < this.config.layerList.length; i++) {
-          this.config.layerList[i].setStyle(this.config.styleList[i]);
+        selectorMunicipio.item(0).selected ='selected';
+
+        if (this.config.munAnterior != false) {
+          this.config.munAnterior.setStyle(this.config.stAnterior);
         }
+       
 
 
 
@@ -575,17 +570,17 @@ export default class MunpanelControl extends M.Control {
 
 
     for (let i = 0; i < this.config.layerList.length; i++) {
-      //this.config.layerList[i].setStyle(this.config.styleList[i]);
+     
       if ((this.config.layerList[i].getImpl().name == prov) || (prov == 'Todas')) {
         for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
           if (this.config.layerList[i].getFeatures()[t].getImpl().getAttribute('nombre') == mun) {
             muni = this.config.layerList[i].getFeatures()[t];
             this.config.munSelect = mun;
-            if(this.config.munAnterior!=false){
+            if (this.config.munAnterior != false) {
               this.config.munAnterior.setStyle(this.config.stAnterior);
             }
-            this.config.selectedFeature= muni;
-            this.config.selectedProv=this.config.layerList[i];
+            this.config.selectedFeature = muni;
+            this.config.selectedProv = this.config.layerList[i];
 
             this.config.munAnterior = muni;
             this.config.stAnterior = muni.getStyle();
@@ -606,7 +601,7 @@ export default class MunpanelControl extends M.Control {
             param_mun[2].addTab(this.popupTabContent(prov, muni));
             this.addPopupFeature(param_mun[2], param_mun[0], param_mun[1]);
             this.map_.setCenter({ x: this.centroide(muni)[0], y: this.centroide(muni)[1], draw: false });
-            //this.map_.setCenter([this.centroide(muni)[0], this.centroide(muni)[1]]);
+            
             this.cambiaSelect(mun);
           }
         }
@@ -633,13 +628,8 @@ export default class MunpanelControl extends M.Control {
     popup_rec.className = 'pop_feat';
 
     document.querySelectorAll('a.m-popup-closer')[0].addEventListener('click', () => {
-      // for (let i = 0; i < this.config.layerList.length; i++) {
-      //   this.config.layerList[i].setStyle(this.config.styleList[i]);
-      // }
-
-
       this.config.munAnterior.setStyle(this.config.stAnterior);
-      document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';      
+      document.querySelectorAll('select#selectMunicipios')[0].value = 'Select';
       this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
       this.config.selectedFeature = '';
       this.config.selectedProv = '';
@@ -1135,7 +1125,7 @@ export default class MunpanelControl extends M.Control {
         for (let j = 0; j < this.config.listPoblacion.length; j = j + 2) {
           if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listPoblacion[j]) {
             let pob = Number(this.config.listPoblacion[j + 1].replace('.', ''));
-            //console.log(this.config.layerList[i].getFeatures()[t].getAttribute('nombre') + '=' + pob);
+           
             if (pob <= 1000) {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
