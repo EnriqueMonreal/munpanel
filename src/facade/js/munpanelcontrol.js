@@ -110,6 +110,7 @@ export default class MunpanelControl extends M.Control {
 
         this.config.stAnterior = false;   // INICIALIZAMOS VALORES
         this.config.munAnterior = false;
+        selectorMunicipio.item(0).selected = 'selected';
 
         //document.getElementById('controlCarga').style.display = 'block';
 
@@ -580,7 +581,9 @@ export default class MunpanelControl extends M.Control {
           if (this.config.layerList[i].getFeatures()[t].getImpl().getAttribute('nombre') == mun) {
             muni = this.config.layerList[i].getFeatures()[t];
             this.config.munSelect = mun;
-
+            if(this.config.munAnterior!=false){
+              this.config.munAnterior.setStyle(this.config.stAnterior);
+            }
             this.config.selectedFeature= muni;
             this.config.selectedProv=this.config.layerList[i];
 
