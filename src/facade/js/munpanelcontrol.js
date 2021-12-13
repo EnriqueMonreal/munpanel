@@ -87,6 +87,8 @@ export default class MunpanelControl extends M.Control {
 
       }
 
+      document.querySelectorAll('div.m-panel.m-leyenda>div.m-panel-controls')[0].innerHTML="<div id='leyenda-title'></div><div class='leyenda'></div>";
+
 
 
       selectorProvincia.addEventListener('change', () => {
@@ -1401,8 +1403,11 @@ export default class MunpanelControl extends M.Control {
         }
       }
     }
-    document.querySelectorAll('div.m-panel.m-leyenda>div.m-panel-controls')[0].innerHTML='<img src="munpanel/src/assets/icons/poblacion.png" alt="Leyenda Poblacion" title ="Leyenda Población" width="200" height="200">';
-    //C:\proyectos\munpanel\src\facade\assets\icons\poblacion.png
+
+    document.querySelectorAll('div.m-panel.m-leyenda>div.m-panel-controls>div#leyenda-title')[0].innerHTML='Población por municipios año '+ this.config.pobYear + '';
+    
+    document.querySelectorAll('div.m-panel.m-leyenda>div.m-panel-controls>div.leyenda')[0].innerHTML='<img src="../../../leyendas/poblacion.png" alt="Leyenda Poblacion" title ="Leyenda Población" >';
+   
   }
 
   representaSuperavit() {
