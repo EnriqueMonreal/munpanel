@@ -63,7 +63,18 @@ export default class Munpanel extends M.Plugin {
       collapsedButtonClass: 'g-cartografia-prismaticos',
     });
     this.panel_.addControls(this.controls_);
-    map.addPanels(this.panel_);    
+    map.addPanels(this.panel_); 
+    
+    //añade panel leyenda
+
+    var panelLeyend = new M.ui.Panel('legend', {
+      "collapsible": true,      
+      "className": 'm-leyenda',
+      "collapsedButtonClass": 'g-cartografia-capas2',
+      "position": M.ui.position.TR
+    });
+    
+    map.addPanels([panelLeyend]);
     
   }
 

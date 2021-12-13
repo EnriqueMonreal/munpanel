@@ -257,12 +257,13 @@ const categoriaHuelva = new M.style.Category("provincia", {
   "Huelva": estiloHuelva
 });
 
+
 const munSelect = '';
 const provinciaSeleccionada = 'Select';
 const numeroTablas = 0;
 const pag = 0;
 const reg = 0;
-const num_results = 10;
+const num_results = 9;
 const result = [];
 
 const listPoblacion = [];
@@ -307,7 +308,7 @@ map.addLayers([Almeria, Granada, Jaen, Cordoba, Sevilla, Huelva, Cadiz, Malaga])
 
 const vistaInicial = map.getMaxExtent();
 
-map.addControls(['scaleline', 'mouse', 'OverviewMap', 'panzoombar', 'layerswitcher']);
+map.addControls(['scaleline', 'mouse', 'OverviewMap', 'panzoombar']);
 
 const configMunpanel = {
   layerList: [
@@ -375,7 +376,14 @@ const mp_munpanel = new Munpanel(configMunpanel);
 
 map.addPlugin(mp_munpanel);
 
+// var panelLeyend = new M.ui.Panel('legend', {
+//   "collapsible": true,
+//   "className": 'm-leyenda',
+//   "collapsedButtonClass": 'g-cartografia-capas2',
+//   "position": M.ui.position.TR
+// });
 
+// map.addPanels([panelLeyend]);
 
 
 mp_munpanel.on(M.evt.ADDED_TO_MAP, () => {

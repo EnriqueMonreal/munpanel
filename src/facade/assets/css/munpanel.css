@@ -26,6 +26,26 @@
   transition: none !important;
   
 }
+.m-areas>div.m-area>div.m-panel.m-leyenda.collapsed>button{
+  background-color: #0b3b37 !important; 
+  color: #ffffff !important;
+}
+
+.m-areas>div.m-area>div.m-panel.m-leyenda.opened>button{
+  position: absolute;
+  right: 300px;
+  background-color: #0b3b37 !important; 
+  color: #ffffff !important;
+}
+
+.m-areas>div.m-area>div.m-panel.m-leyenda.opened{
+  width:300px;
+  height: 300px;
+}
+.m-areas>div.m-area>div.m-panel.m-leyenda.collapsed{
+  
+  height: 40px !important;
+}
 
 
 
@@ -39,7 +59,7 @@
 
 .m-areas>div.m-area>div.m-panel.m-munpanel.collapsed>button{
   background-color: #00897b !important;
-  color:#ffffff !important
+  color:#ffffff !important;
 }
 
 .m-areas>div.m-area.m-top.m-right>div.m-panel.m-munpanel.opened{
@@ -235,6 +255,14 @@ div#controlTablas>button.g-cartografia-flecha-derecha:hover{
   height: 100%;
   margin-top: 0%;
 }
+div#leyenda{
+  position:sticky;
+  width: 60%;
+  height: 200px;
+  background-color: #0b3b37;
+  margin-bottom: 5px;
+  left: 20%;
+}
 
 #selectProvincias {
   margin-left: 25%;            
@@ -249,19 +277,33 @@ div#controlTablas>button.g-cartografia-flecha-derecha:hover{
   height: 20px;
 }
 
+#selectRepresentacion {
+  margin-left: 35%; 
+  /* margin-bottom: 10px;            */
+  width: 30%;
+  height: 20px;
+}
+
 #selectPoblacion {
-  margin-left: 42.5%; 
+  /* margin-right: 42.5%;  */
   /* margin-bottom: 10px;            */
   width: 15%;
   height: 20px;
 }
+label#year{
+  margin-left: 39%;
+  font-size: 1.17em;
+  color:#000;
+  font-weight: bold;
+}
+
 
 #selectRegimenAfiliacion {
   margin-left: 12.5%; 
   /* margin-bottom: 10px;            */
   width: 75%;
   height: 20px;
- 
+
 }
 
 #selectSexoAfiliacion {
