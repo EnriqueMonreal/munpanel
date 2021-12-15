@@ -2,7 +2,10 @@ import Munpanel from 'facade/munpanel';
 
 const map = M.map({
   container: 'mapjs',
-
+  wmcfiles: ['http://www.callejerodeandalucia.es/wmc/context_cdau_callejero.xml*Mapa',
+  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/WMC/tematicos/WMC_mdt16_DERA.xml*MDT'
+  ],
+  projection: 'EPSG:25830*m'  
 });
 
 const Almeria = new M.layer.GeoJSON(
@@ -159,71 +162,6 @@ const estiloHuelva = new M.style.Polygon({
 });
 
 
-// const pob_1000 = new M.style.Polygon({
-//   fill: {
-//     color: '#a6b0da',
-//     opacity: 0.5,
-//   },
-//   stroke: {
-//     color: '#0c0c0c',
-//     width: 1 
-//   }
-// });
-
-// const pob1000_5000 = new M.style.Polygon({
-//   fill: {
-//     color: '#7282c0',
-//     opacity: 0.5,
-//   },
-//   stroke: {
-//     color: '#0c0c0c',
-//     width: 1 
-//   }
-// });
-
-// const pob5000_10000 = new M.style.Polygon({
-//   fill: {
-//     color: '#4559a8',
-//     opacity: 0.5,
-//   },
-//   stroke: {
-//     color: '#0c0c0c',
-//     width: 1 
-//   }
-// });
-
-// const pob10000_50000 = new M.style.Polygon({
-//   fill: {
-//     color: '#21337e',
-//     opacity: 0.5,
-//   },
-//   stroke: {
-//     color: '#0c0c0c',
-//     width: 1 
-//   }
-// });
-
-// const pob50000_100000 = new M.style.Polygon({
-//   fill: {
-//     color: '#09174b',
-//     opacity: 0.5,
-//   },
-//   stroke: {
-//     color: '#0c0c0c',
-//     width: 1 
-//   }
-// });
-
-// const pob100000_ = new M.style.Polygon({
-//   fill: {
-//     color: '#010513',
-//     opacity: 0.5,
-//   },
-//   stroke: {
-//     color: '#0c0c0c',
-//     width: 1 
-//   }
-// });
 
 const categoriaCadiz = new M.style.Category("provincia", {
   "Cádiz": estiloCadiz
@@ -265,6 +203,10 @@ const pag = 0;
 const reg = 0;
 const num_results = 9;
 const result = [];
+
+const PoblacionJson = '';
+const SuperavitJson = '';
+const SegsocialJson = '';
 
 const listPoblacion = [];
 const listSuperavit = [];
@@ -331,14 +273,7 @@ const configMunpanel = {
     categoriaCadiz,
     categoriaMalaga,
   ],
-  // stylePobList:[
-  //   pob_1000,
-  //   pob1000_5000,
-  //   pob5000_10000,
-  //   pob10000_50000,
-  //   pob50000_100000,
-  //   pob100000_,
-  // ],
+  
   selectedFeature: selectedFeature,
   selectedProv: selectedProv,
   listPoblacion: listPoblacion,
@@ -363,6 +298,9 @@ const configMunpanel = {
   stAnterior: stAnterior,
   munAnterior: munAnterior,
   status: {
+    PoblacionJson: PoblacionJson,
+    SegsocialJson: SegsocialJson,
+    SuperavitJson: SuperavitJson,
     stSegsocial: stSegsocial,
     stSuperavit: stSuperavit,
     stPoblacion: stPoblacion,
@@ -375,15 +313,6 @@ const configMunpanel = {
 const mp_munpanel = new Munpanel(configMunpanel);
 
 map.addPlugin(mp_munpanel);
-
-// var panelLeyend = new M.ui.Panel('legend', {
-//   "collapsible": true,
-//   "className": 'm-leyenda',
-//   "collapsedButtonClass": 'g-cartografia-capas2',
-//   "position": M.ui.position.TR
-// });
-
-// map.addPanels([panelLeyend]);
 
 
 mp_munpanel.on(M.evt.ADDED_TO_MAP, () => {

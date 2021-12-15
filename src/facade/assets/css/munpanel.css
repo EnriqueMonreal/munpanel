@@ -33,18 +33,29 @@
   box-shadow: none !important;
   background-color: #00897b !important; 
   color: #ffffff !important;
+  transition:  background-color 0.5s;
 }
+
+.m-areas>div.m-area>div.m-panel.m-leyenda.collapsed>button:hover{
+  background-color: #219c90 !important;
+}
+
+select.m-wmcselector-select{
+  padding-left: 10px;
+  padding-right: 10px;
+  }
+
 
 .m-areas>div.m-area>div.m-panel.m-leyenda.opened>button{
   box-shadow: none !important;
   position: absolute;
-  right: 300px;
+  right: 500px;
   background-color: #00897b !important; 
   color: #ffffff !important;
 }
 
 .m-areas>div.m-area>div.m-panel.m-leyenda.opened{
-  width:300px;
+  width:500px;  
   height: 240px;
 }
 .m-areas>div.m-area>div.m-panel.m-leyenda.collapsed{
@@ -62,14 +73,20 @@ div#leyenda-title{
   color:#fff;
 }
 .m-areas>div.m-area>div.m-panel.m-leyenda>div.m-panel-controls>div.leyenda{
+  display: flex;
   overflow: hidden;
   position: absolute !important;
+  vertical-align: middle;
   top:40px;  
- 
   width: 100%;
   height: 200px;
 }
 
+.m-areas>div.m-area>div.m-panel.m-leyenda>div.m-panel-controls>div.leyenda>img{
+  margin-left: 100px;
+ 
+  
+}
 
 
 .m-areas>div.m-area>div.m-panel.m-munpanel>div.m-panel-controls{
@@ -89,7 +106,13 @@ div#leyenda-title{
 
 .m-areas>div.m-area>div.m-panel.m-munpanel.collapsed>button{
   background-color: #00897b !important;
-  color:#ffffff !important;
+  color:#ffffff !important;  
+  transition:  background-color 0.5s;
+  
+}
+.m-areas>div.m-area>div.m-panel.m-munpanel.collapsed>button:hover{
+  background-color: #219c90 !important;  
+    
 }
 
 .m-areas>div.m-area.m-top.m-right>div.m-panel.m-munpanel.opened{

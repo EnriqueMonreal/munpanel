@@ -64,6 +64,8 @@ export default class Munpanel extends M.Plugin {
     });
     this.panel_.addControls(this.controls_);
     map.addPanels(this.panel_); 
+
+  
     
     //añade panel leyenda
 
