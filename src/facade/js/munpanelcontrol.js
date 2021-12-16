@@ -83,7 +83,7 @@ export default class MunpanelControl extends M.Control {
 
       document.querySelectorAll('div.m-panel.m-leyenda>div.m-panel-controls>div.leyenda')[0].innerHTML = '<img src="../../../leyendas/provincias.png" alt="Leyenda Provincias" title ="Leyenda Provincias" >';
 
-     
+
 
       selectorProvincia.addEventListener('change', () => {
         const Provi = selectorProvincia.value;
@@ -102,6 +102,8 @@ export default class MunpanelControl extends M.Control {
 
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+          // this.config.selectedFeature = '';
+          // this.config.selectedProv = '';
         }
 
         if (this.map_.getPopup()) {
@@ -307,6 +309,8 @@ export default class MunpanelControl extends M.Control {
       selectorYear.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+          // this.config.selectedFeature = '';
+          // this.config.selectedProv = '';
         }
 
         if (this.map_.getPopup()) {
@@ -347,6 +351,8 @@ export default class MunpanelControl extends M.Control {
       selectorRegimen.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+          // this.config.selectedFeature = '';
+          // this.config.selectedProv = '';
         }
 
         if (this.map_.getPopup()) {
@@ -358,10 +364,6 @@ export default class MunpanelControl extends M.Control {
         if (this.config.munAnterior != false) {
           this.config.munAnterior.setStyle(this.config.stAnterior);
         }
-
-
-
-
 
         if (selectorRegimen.value != '') {
           selectorSexo.style.marginBottom = '0px';
@@ -392,6 +394,8 @@ export default class MunpanelControl extends M.Control {
 
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+          // this.config.selectedFeature = '';
+          // this.config.selectedProv = '';
         }
 
         if (this.map_.getPopup()) {
@@ -436,6 +440,8 @@ export default class MunpanelControl extends M.Control {
       selectorSuperavit.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
+          // this.config.selectedFeature = '';
+          // this.config.selectedProv = '';
         }
 
         if (this.map_.getPopup()) {
@@ -485,6 +491,9 @@ export default class MunpanelControl extends M.Control {
       });
 
       botonBuscaMunicipio.addEventListener('click', () => {
+        this.config.pag = 0;
+        this.config.reg = 0;
+        this.config.result = [];
         this.listaMunicipios();
       });
       botonLimpiaMunicipio.addEventListener('click', () => {
@@ -511,15 +520,15 @@ export default class MunpanelControl extends M.Control {
 
       });
 
-       this.map_.getPanels('legend')[0].on(M.evt.SHOW,()=>{
-         if(this.map_.getPanels('panelMunpanel')[0]._collapsed==false){
-           this.map_.getPanels('panelMunpanel')[0].collapse();
-         }
+      this.map_.getPanels('legend')[0].on(M.evt.SHOW, () => {
+        if (this.map_.getPanels('panelMunpanel')[0]._collapsed == false) {
+          this.map_.getPanels('panelMunpanel')[0].collapse();
+        }
 
-       });
+      });
 
-       this.map_.getPanels('panelMunpanel')[0].on(M.evt.SHOW,()=>{
-        if(this.map_.getPanels('legend')[0]._collapsed==false){
+      this.map_.getPanels('panelMunpanel')[0].on(M.evt.SHOW, () => {
+        if (this.map_.getPanels('legend')[0]._collapsed == false) {
           this.map_.getPanels('legend')[0].collapse();
         }
 
@@ -534,7 +543,9 @@ export default class MunpanelControl extends M.Control {
 
           if (this.config.munAnterior != false) {
             this.config.munAnterior.setStyle(this.config.stAnterior);
+
           }
+
           this.config.selectedFeature = features[0];
           this.config.selectedProv = this.config.layerList[i];
           this.config.munAnterior = this.config.selectedFeature;
@@ -623,19 +634,15 @@ export default class MunpanelControl extends M.Control {
       this.map_.removePopup();
     }
 
-    
-    let layer= this.map_.getLayers();
-    for(let i=0; i< layer.length;i++){
-      
-      if((layer[i].zindex_>10000)&&(layer[i].zindex_<10990)){
-       
+
+    let layer = this.map_.getLayers();
+    for (let i = 0; i < layer.length; i++) {
+
+      if ((layer[i].zindex_ > 10000) && (layer[i].zindex_ < 10990)) {
+
         this.map_.removeLayers(layer[i]);
       }
     }
-
-    console.log(this.map_.getLayers());
-    
-
 
     for (let i = 0; i < document.getElementById('selectProvincias').options.length; i++) {
 
