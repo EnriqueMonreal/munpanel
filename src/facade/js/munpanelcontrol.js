@@ -623,19 +623,20 @@ export default class MunpanelControl extends M.Control {
       this.map_.removePopup();
     }
 
-    let cont = this.map_.getLayers().length - 9;
-
-    if (this.map_.getLayers().length > 9) {
-      for (let x = 0; x < cont; x++) {
-        let capaCargada = this.map_.getLayers()[8];
-
-        this.map_.removeLayers(capaCargada);
-
-        this.config.layerList[x].setStyle(this.config.styleList[x]);
-
+    
+    let layer= this.map_.getLayers();
+    for(let i=0; i< layer.length;i++){
+      
+      if((layer[i].zindex_>10000)&&(layer[i].zindex_<10990)){
+       
+        this.map_.removeLayers(layer[i]);
       }
-
     }
+
+    console.log(this.map_.getLayers());
+    
+
+
     for (let i = 0; i < document.getElementById('selectProvincias').options.length; i++) {
 
       if (document.getElementById('selectProvincias').options[i].value == option) {
@@ -1393,7 +1394,7 @@ export default class MunpanelControl extends M.Control {
         this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
           fill: {
             color: '#d8d8d8',
-            opacity: 0.5,
+            opacity: 0.7,
           },
           stroke: {
             color: '#0c0c0c',
@@ -1408,7 +1409,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#d8d8d8',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1420,7 +1421,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#e0adad',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1432,7 +1433,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#e88282',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1444,7 +1445,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#f05656',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1456,7 +1457,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#f82b2b',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1468,7 +1469,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#ff0000',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1493,7 +1494,7 @@ export default class MunpanelControl extends M.Control {
         this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
           fill: {
             color: '#ffffff',
-            opacity: 0.5,
+            opacity: 0.7,
           },
           stroke: {
             color: '#0c0c0c',
@@ -1508,7 +1509,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#b0eeb5',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1520,7 +1521,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#81da88',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1532,7 +1533,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#4aca54',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1544,7 +1545,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#11a51e',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1556,7 +1557,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#eccbcb',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1568,7 +1569,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#e5a0a0',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1580,7 +1581,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#f35757',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1592,7 +1593,7 @@ export default class MunpanelControl extends M.Control {
               this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                 fill: {
                   color: '#f31313',
-                  opacity: 0.5,
+                  opacity: 0.7,
                 },
                 stroke: {
                   color: '#0c0c0c',
@@ -1618,7 +1619,7 @@ export default class MunpanelControl extends M.Control {
         this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
           fill: {
             color: '#ffffff',
-            opacity: 0.5,
+            opacity: 0.7,
           },
           stroke: {
             color: '#0c0c0c',
@@ -1636,7 +1637,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#d0d0e6',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1648,7 +1649,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#ababe7',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1660,7 +1661,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#7e7eda',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1672,7 +1673,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#5050d6',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1684,7 +1685,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#1919e2',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1705,7 +1706,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#d0d0e6',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1717,7 +1718,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#ababe7',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1729,7 +1730,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#7e7eda',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1741,7 +1742,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#5050d6',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',
@@ -1753,7 +1754,7 @@ export default class MunpanelControl extends M.Control {
                 this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
                   fill: {
                     color: '#1919e2',
-                    opacity: 0.5,
+                    opacity: 0.7,
                   },
                   stroke: {
                     color: '#0c0c0c',

@@ -2,8 +2,10 @@ import Munpanel from 'facade/munpanel';
 
 const map = M.map({
   container: 'mapjs',
-  wmcfiles: ['http://www.callejerodeandalucia.es/wmc/context_cdau_callejero.xml*Mapa',
-  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/WMC/tematicos/WMC_mdt16_DERA.xml*MDT'
+  wmcfiles: [  
+  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_callejero_simplificado.xml*Callejero',
+  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_satelite_simplificado.xml*Satélite',
+  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_hibrido_simplificado.xml*Híbrido'
   ],
   projection: 'EPSG:25830*m'  
 });
