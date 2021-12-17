@@ -148,7 +148,7 @@ export default class MunpanelControl extends M.Control {
 
           this.config.pobYear = selectorYear.value;
 
-          this.config.status.stPoblacion = false;
+          this.config.status.stPoblacion = true;
           this.config.status.stSuperavit = false;
           this.config.status.stSegsocial = false;
           this.config.status.opcPoblacion = true;
@@ -176,7 +176,7 @@ export default class MunpanelControl extends M.Control {
             if (document.getElementById('selectRepresentacion').value == 'Poblacion') {
               this.representaPoblacion();
             }
-            this.config.status.stPoblacion = true;
+            
 
           }
         }
@@ -189,7 +189,7 @@ export default class MunpanelControl extends M.Control {
           this.config.munAnterior = false;
 
           this.config.status.stPoblacion = false;
-          this.config.status.stSuperavit = false;
+          this.config.status.stSuperavit = true;
           this.config.status.stSegsocial = false;
           this.config.status.opcPoblacion = false;
           this.config.status.opcSuperavit = true;
@@ -230,7 +230,7 @@ export default class MunpanelControl extends M.Control {
           this.config.ssSexo = selectorSexo.value;
           this.config.status.stPoblacion = false;
           this.config.status.stSuperavit = false;
-          this.config.status.stSegsocial = false;
+          this.config.status.stSegsocial = true;
           this.config.status.opcPoblacion = false;
           this.config.status.opcSuperavit = false;
           this.config.status.opcSegsocial = true;
@@ -572,7 +572,7 @@ export default class MunpanelControl extends M.Control {
             this.creaSelect('Todas');
             this.cambiaSelect(this.config.munSelect);
           }
-
+          
         });
       }
 
@@ -765,10 +765,12 @@ export default class MunpanelControl extends M.Control {
       }
     }
 
+   
 
     if (go) {
 
       this.buscaMunicipio(Munic, Provi);
+      
     }
   }
 
@@ -1101,7 +1103,7 @@ export default class MunpanelControl extends M.Control {
 
 
 
-    if (this.config.reg > 15) {
+    if (this.config.reg > this.config.num_results) {
       document.getElementById('controlTablas').style.display = 'flex';
       document.getElementById('botonAvance').style.display = 'flex';
       document.getElementById('botonAtras').style.display = 'none';
