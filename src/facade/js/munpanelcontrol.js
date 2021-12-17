@@ -1398,91 +1398,35 @@ export default class MunpanelControl extends M.Control {
   representaPoblacion() {
     for (let i = 0; i < this.config.layerList.length; i++) {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
-        this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
-          fill: {
-            color: '#d8d8d8',
-            opacity: 0.7,
-          },
-          stroke: {
-            color: '#0c0c0c',
-            width: 1
-          }
-        }));
+
+        this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_1000);  // SE AÑADE ESTE ESTILO EN CASO DE NO HABER DATO
+
         for (let j = 0; j < this.config.listPoblacion.length; j = j + 2) {
           if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listPoblacion[j]) {
             let pob = Number(this.config.listPoblacion[j + 1].replace('.', ''));
 
-            if (pob <= 1000) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#d8d8d8',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+            if (pob <= 1000) {             
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_1000);
             }
             if ((pob > 1000) && (pob <= 5000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#e0adad',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+             
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_1000_5000);
             }
             if ((pob > 5000) && (pob <= 10000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#e88282',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_5000_10000);
             }
             if ((pob > 10000) && (pob <= 50000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#f05656',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_10000_50000);
             }
             if ((pob > 50000) && (pob <= 100000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#f82b2b',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_50000_100000);
             }
             if (pob > 100000) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#ff0000',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob100000_);
             }
           }
         }
@@ -1498,115 +1442,38 @@ export default class MunpanelControl extends M.Control {
   representaSuperavit() {
     for (let i = 0; i < this.config.layerList.length; i++) {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
-        this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
-          fill: {
-            color: '#ffffff',
-            opacity: 0.7,
-          },
-          stroke: {
-            color: '#0c0c0c',
-            width: 1
-          }
-        }));
+        
+        this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup_sin_dato);   // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE SUPERAVIT
+
         for (let j = 0; j < this.config.listSuperavit.length; j = j + 2) {
           if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listSuperavit[j]) {
             let sup = Number(this.config.listSuperavit[j + 1]);
 
             if ((sup >= 0) && (sup <= 500000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#b0eeb5',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup0_05);
+              
             }
             if ((sup > 500000) && (sup <= 1000000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#81da88',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup05_1);
             }
             if ((sup > 1000000) && (sup <= 5000000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#4aca54',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup1_5);
             }
             if (sup > 5000000) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#11a51e',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup5_);
             }
             if ((sup < 0) && (sup >= -500000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#eccbcb',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.def0_05);
             }
             if ((sup < -500000) && (sup >= -1000000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#e5a0a0',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.def05_1);
             }
             if ((sup < -1000000) && (sup >= -5000000)) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#f35757',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.def1_5);
             }
             if (sup < -5000000) {
-              this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                fill: {
-                  color: '#f31313',
-                  opacity: 0.7,
-                },
-                stroke: {
-                  color: '#0c0c0c',
-                  width: 1
-                }
-              }));
+              this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.def5_);
             }
           }
         }
@@ -1623,16 +1490,9 @@ export default class MunpanelControl extends M.Control {
 
     for (let i = 0; i < this.config.layerList.length; i++) {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
-        this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({  // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE POBLACION
-          fill: {
-            color: '#ffffff',
-            opacity: 0.7,
-          },
-          stroke: {
-            color: '#0c0c0c',
-            width: 1
-          }
-        }));
+        
+        this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi_sin_dato);   // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE AFILIACION
+       
         if (this.config.ssSexo != 'Ambos sexos disgregados') {
           for (let j = 0; j < this.config.listSegsocial.length; j = j + 2) {
             if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listSegsocial[j]) {
@@ -1641,64 +1501,19 @@ export default class MunpanelControl extends M.Control {
                 ss = Number(this.config.listSegsocial[j + 1].replace('.', ''));
               }
               if ((ss >= 0) && (ss <= 100)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#d0d0e6',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi0_100);
               }
               if ((ss > 100) && (ss <= 1000)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#ababe7',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi100_1000);
               }
               if ((ss > 1000) && (ss <= 5000)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#7e7eda',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi1000_5000);
               }
               if ((ss > 5000) && (ss <= 10000)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#5050d6',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi5000_10000);
               }
               if (ss > 10000) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#1919e2',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi10000_);
               }
             }
           }
@@ -1710,70 +1525,23 @@ export default class MunpanelControl extends M.Control {
                 ss = Number(this.config.listSegsocial[j + 3].replace('.', ''));
               }
               if ((ss >= 0) && (ss <= 100)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#d0d0e6',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi0_100);
               }
               if ((ss > 100) && (ss <= 1000)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#ababe7',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi100_1000);
               }
               if ((ss > 1000) && (ss <= 5000)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#7e7eda',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi1000_5000);
               }
               if ((ss > 5000) && (ss <= 10000)) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#5050d6',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi5000_10000);
               }
               if (ss > 10000) {
-                this.config.layerList[i].getFeatures()[t].setStyle(new M.style.Polygon({
-                  fill: {
-                    color: '#1919e2',
-                    opacity: 0.7,
-                  },
-                  stroke: {
-                    color: '#0c0c0c',
-                    width: 1
-                  }
-                }));
+                this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi10000_);
               }
             }
           }
         }
-
-
       }
     }
 

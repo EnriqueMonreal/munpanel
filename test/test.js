@@ -2,12 +2,12 @@ import Munpanel from 'facade/munpanel';
 
 const map = M.map({
   container: 'mapjs',
-  wmcfiles: [  
-  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_callejero_simplificado.xml*Callejero',
-  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_satelite_simplificado.xml*Satélite',
-  'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_hibrido_simplificado.xml*Híbrido'
+  wmcfiles: [
+    'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_callejero_simplificado.xml*Callejero',
+    'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_satelite_simplificado.xml*Satélite',
+    'http://www.juntadeandalucia.es/institutodeestadisticaycartografia/VisorGrid/wmc/WMC_hibrido_simplificado.xml*Híbrido'
   ],
-  projection: 'EPSG:25830*m'  
+  projection: 'EPSG:25830*m'
 });
 
 const Almeria = new M.layer.GeoJSON(
@@ -163,7 +163,253 @@ const estiloHuelva = new M.style.Polygon({
   }
 });
 
+const estiloPrueba = new M.style.Polygon({
+  fill: {
+    color: '#0000ff',
+    opacity: 0.5,
+  },
+  stroke: {
+    color: '#000000',
+    width: 4
+  }
+});
 
+// ESTILOS REPRESENTACION POBLACIÓN
+
+const pob_1000 = new M.style.Polygon({
+  fill: {
+    color: '#d8d8d8',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const pob_1000_5000 = new M.style.Polygon({
+  fill: {
+    color: '#e0adad',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const pob_5000_10000 = new M.style.Polygon({
+  fill: {
+    color: '#e88282',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const pob_10000_50000 = new M.style.Polygon({
+  fill: {
+    color: '#f05656',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const pob_50000_100000 = new M.style.Polygon({
+  fill: {
+    color: '#f82b2b',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const pob100000_ = new M.style.Polygon({
+  fill: {
+    color: '#ff0000',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+// ESTILOS DE SUPERAVIT
+
+const sup_sin_dato = new M.style.Polygon({
+  fill: {
+    color: '#ffffff',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const sup0_05 = new M.style.Polygon({
+  fill: {
+    color: '#b0eeb5',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const sup05_1 = new M.style.Polygon({
+  fill: {
+    color: '#81da88',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const sup1_5 = new M.style.Polygon({
+  fill: {
+    color: '#4aca54',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const sup5_ = new M.style.Polygon({
+  fill: {
+    color: '#11a51e',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const def0_05 = new M.style.Polygon({
+  fill: {
+    color: '#eccbcb',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const def05_1 = new M.style.Polygon({
+  fill: {
+    color: '#e5a0a0',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const def1_5 = new M.style.Polygon({
+  fill: {
+    color: '#f35757',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const def5_ = new M.style.Polygon({
+  fill: {
+    color: '#f31313',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+// ESTILOS DE AFILIACION
+
+const afi_sin_dato = new M.style.Polygon({ 
+  fill: {
+    color: '#ffffff',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const afi0_100 = new M.style.Polygon({
+  fill: {
+    color: '#d0d0e6',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const afi100_1000 = new M.style.Polygon({
+  fill: {
+    color: '#ababe7',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const afi1000_5000 = new M.style.Polygon({
+  fill: {
+    color: '#7e7eda',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const afi5000_10000 = new M.style.Polygon({
+  fill: {
+    color: '#5050d6',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
+
+const afi10000_ = new M.style.Polygon({
+  fill: {
+    color: '#1919e2',
+    opacity: 0.7,
+  },
+  stroke: {
+    color: '#0c0c0c',
+    width: 1
+  }
+});
 
 const categoriaCadiz = new M.style.Category("provincia", {
   "Cádiz": estiloCadiz
@@ -275,7 +521,38 @@ const configMunpanel = {
     categoriaCadiz,
     categoriaMalaga,
   ],
-  
+
+  pobList: {
+    pob_1000: pob_1000,
+    pob_1000_5000: pob_1000_5000,
+    pob_5000_10000: pob_5000_10000,
+    pob_10000_50000: pob_10000_50000,
+    pob_50000_100000: pob_50000_100000,
+    pob100000_: pob100000_
+  },
+
+  supList: {
+    sup_sin_dato: sup_sin_dato,
+    sup0_05: sup0_05,
+    sup05_1: sup05_1,
+    sup1_5: sup1_5,
+    sup5_: sup5_,
+    def0_05: def0_05,
+    def05_1: def05_1,
+    def1_5: def1_5,
+    def5_: def5_
+  },
+  afiList: {
+    afi_sin_dato: afi_sin_dato,
+    afi0_100: afi0_100,
+    afi100_1000: afi100_1000,
+    afi1000_5000: afi1000_5000,
+    afi5000_10000: afi5000_10000,
+    afi10000_:afi10000_
+  },
+
+  estiloPrueba: estiloPrueba,
+
   selectedFeature: selectedFeature,
   selectedProv: selectedProv,
   listPoblacion: listPoblacion,
