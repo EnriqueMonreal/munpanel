@@ -77,7 +77,6 @@ export default class Munpanel extends M.Plugin {
     });
     
     map.addPanels([panelLeyend]);
-    
   }
 
   /**

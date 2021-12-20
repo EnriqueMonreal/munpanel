@@ -102,8 +102,7 @@ export default class MunpanelControl extends M.Control {
 
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          // this.config.selectedFeature = '';
-          // this.config.selectedProv = '';
+         
         }
 
         if (this.map_.getPopup()) {
@@ -116,12 +115,7 @@ export default class MunpanelControl extends M.Control {
           this.config.stAnterior = false;   // INICIALIZAMOS VALORES
           this.config.munAnterior = false;
 
-          this.config.status.stPoblacion = false;
-          this.config.status.stSuperavit = false;
-          this.config.status.stSegsocial = false;
-          this.config.status.opcPoblacion = false;
-          this.config.status.opcSuperavit = false;
-          this.config.status.opcSegsocial = false;
+         
 
           for (let i = 0; i < this.config.layerList.length; i++) {
             this.config.layerList[i].setStyle(this.config.styleList[i]);
@@ -148,12 +142,7 @@ export default class MunpanelControl extends M.Control {
 
           this.config.pobYear = selectorYear.value;
 
-          this.config.status.stPoblacion = true;
-          this.config.status.stSuperavit = false;
-          this.config.status.stSegsocial = false;
-          this.config.status.opcPoblacion = true;
-          this.config.status.opcSuperavit = false;
-          this.config.status.opcSegsocial = false;
+         
 
 
 
@@ -176,7 +165,7 @@ export default class MunpanelControl extends M.Control {
             if (document.getElementById('selectRepresentacion').value == 'Poblacion') {
               this.representaPoblacion();
             }
-            
+
 
           }
         }
@@ -188,12 +177,7 @@ export default class MunpanelControl extends M.Control {
           this.config.stAnterior = false;   // INICIALIZAMOS VALORES
           this.config.munAnterior = false;
 
-          this.config.status.stPoblacion = false;
-          this.config.status.stSuperavit = true;
-          this.config.status.stSegsocial = false;
-          this.config.status.opcPoblacion = false;
-          this.config.status.opcSuperavit = true;
-          this.config.status.opcSegsocial = false;
+         
 
 
 
@@ -228,12 +212,7 @@ export default class MunpanelControl extends M.Control {
 
           this.config.ssRegimen = selectorRegimen.value;
           this.config.ssSexo = selectorSexo.value;
-          this.config.status.stPoblacion = false;
-          this.config.status.stSuperavit = false;
-          this.config.status.stSegsocial = true;
-          this.config.status.opcPoblacion = false;
-          this.config.status.opcSuperavit = false;
-          this.config.status.opcSegsocial = true;
+         
 
           if (this.config.status.SegsocialJson == '') {
             document.getElementById('controlCarga').style.display = 'block';
@@ -309,15 +288,14 @@ export default class MunpanelControl extends M.Control {
       selectorYear.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          // this.config.selectedFeature = '';
-          // this.config.selectedProv = '';
+         
         }
 
         if (this.map_.getPopup()) {
           this.map_.removePopup();
         }
 
-        selectorMunicipio.item(0).selected = 'selected';
+
 
         if (this.config.munAnterior != false) {
           this.config.munAnterior.setStyle(this.config.stAnterior);
@@ -332,60 +310,78 @@ export default class MunpanelControl extends M.Control {
 
 
         if (selectorYear.value != '') {
-          this.config.status.opcPoblacion = false;
-          document.getElementById('controlCarga').style.display = 'block';
+          this.config.status.opcPoblacion = true;
+          if (this.config.status.PoblacionJson == '') {
+            document.getElementById('controlCarga').style.display = 'block';
+          } else {
+            document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+          }
           this.config.pobYear = selectorYear.value;
 
           this.consultaPoblacion(this.config.pobYear);
 
 
         } else {
-          this.config.status.opcPoblacion = true;
+          this.config.status.opcPoblacion = false;
           document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
           this.config.pobYear = selectorYear.value;
 
         }
+
+       
 
       });
 
       selectorRegimen.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          // this.config.selectedFeature = '';
-          // this.config.selectedProv = '';
+         
         }
 
         if (this.map_.getPopup()) {
           this.map_.removePopup();
         }
 
-        selectorMunicipio.item(0).selected = 'selected';
+
 
         if (this.config.munAnterior != false) {
           this.config.munAnterior.setStyle(this.config.stAnterior);
         }
 
+        selectorSexo.style.marginBottom = '0px';
+
+        this.config.stAnterior = false;   // INICIALIZAMOS VALORES
+        this.config.munAnterior = false;
+        selectorMunicipio.item(0).selected = 'selected';
+
         if (selectorRegimen.value != '') {
-          selectorSexo.style.marginBottom = '0px';
-          document.getElementById('controlCarga').style.display = 'block';
+          this.config.status.opcSegsocial = true;
+          if (this.config.status.SegsocialJson == '') {
+            document.getElementById('controlCarga').style.display = 'block';
+          }else{
+            document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+          }
           if (selectorSexo.value == '') {
             selectorSexo.item(1).selected = 'selected';
           }
+          this.config.ssRegimen = selectorRegimen.value;
+          this.config.ssSexo = selectorSexo.value;
+          this.config.listSegsocial = [];  
+  
+          this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
+
         } else {
           selectorSexo.item(0).selected = 'selected';
+          document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
         }
 
         if ((selectorRegimen.value != '') && (selectorSexo.value != '')) {
-          this.config.status.opcSegsocial = 'false';
-        } else {
           this.config.status.opcSegsocial = 'true';
+        } else {
+          this.config.status.opcSegsocial = 'false';
         }
-        this.config.ssRegimen = selectorRegimen.value;
-        this.config.ssSexo = selectorSexo.value;
-        this.config.listSegsocial = [];
+        
 
-
-        this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
 
 
       });
@@ -394,54 +390,61 @@ export default class MunpanelControl extends M.Control {
 
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          // this.config.selectedFeature = '';
-          // this.config.selectedProv = '';
+          
         }
 
         if (this.map_.getPopup()) {
           this.map_.removePopup();
         }
 
-        selectorMunicipio.item(0).selected = 'selected';
+       
 
         if (this.config.munAnterior != false) {
           this.config.munAnterior.setStyle(this.config.stAnterior);
         }
 
+        selectorSexo.style.marginBottom = '0px';
 
-
+        this.config.stAnterior = false;   // INICIALIZAMOS VALORES
+        this.config.munAnterior = false;
+        selectorMunicipio.item(0).selected = 'selected';
 
 
         if (selectorSexo.value != '') {
-          selectorSexo.style.marginBottom = '0px';
+          this.config.status.opcSegsocial = true;
+          if(this.config.status.SegsocialJson == '') {
           document.getElementById('controlCarga').style.display = 'block';
+          }else{
+            document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+          }
           if (selectorRegimen.value == '') {
             selectorRegimen.item(1).selected = 'selected';
           }
+          this.config.ssRegimen = selectorRegimen.value;
+          this.config.ssSexo = selectorSexo.value;
+          this.config.listSegsocial = [];  
+  
+          this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
+
         } else {
           selectorRegimen.item(0).selected = 'selected';
+          document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
         }
 
         if ((selectorRegimen.value != '') && (selectorSexo.value != '')) {
-          this.config.status.opcSegsocial = 'false';
-        } else {
           this.config.status.opcSegsocial = 'true';
+        } else {
+          this.config.status.opcSegsocial = 'false';
         }
 
-        this.config.ssRegimen = selectorRegimen.value;
-        this.config.ssSexo = selectorSexo.value;
-        this.config.listSegsocial = [];
-
-
-        this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
-
+        
+       
       });
 
       selectorSuperavit.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          // this.config.selectedFeature = '';
-          // this.config.selectedProv = '';
+          
         }
 
         if (this.map_.getPopup()) {
@@ -474,11 +477,14 @@ export default class MunpanelControl extends M.Control {
             if (document.getElementById('selectRepresentacion').value == 'Deficit_Superavit') {
               this.representaSuperavit();
             }
+            this.config.status.opcSuperavit = true;
           }
 
         } else {
           this.config.status.opcSuperavit = false;
         }
+
+        
 
       });
 
@@ -572,7 +578,7 @@ export default class MunpanelControl extends M.Control {
             this.creaSelect('Todas');
             this.cambiaSelect(this.config.munSelect);
           }
-          
+
         });
       }
 
@@ -744,6 +750,8 @@ export default class MunpanelControl extends M.Control {
   }
   seleccionaMunicipio(Provi, Munic) {
 
+
+
     if (this.map_.getPopup()) {
       this.map_.removePopup();
     }
@@ -751,6 +759,7 @@ export default class MunpanelControl extends M.Control {
 
     if (this.config.status.opcPoblacion) {
       if (!this.config.status.stPoblacion) {
+
         go = false;
       }
     }
@@ -765,12 +774,12 @@ export default class MunpanelControl extends M.Control {
       }
     }
 
-   
+
 
     if (go) {
 
       this.buscaMunicipio(Munic, Provi);
-      
+
     }
   }
 
@@ -889,6 +898,7 @@ export default class MunpanelControl extends M.Control {
         }
       }
     }
+
 
   }
 
@@ -1257,8 +1267,36 @@ export default class MunpanelControl extends M.Control {
     requestPoblacion.responseType = 'json';
     requestPoblacion.send();
 
-    requestPoblacion.onload = () => {
-      this.config.status.PoblacionJson = requestPoblacion.response;
+    if (this.config.status.PoblacionJson == '') {
+      requestPoblacion.onload = () => {
+        this.config.status.PoblacionJson = requestPoblacion.response;
+        this.listPoblacion = [];
+        let t = 0;
+        for (let i = 0; i < this.config.status.PoblacionJson.data.length; i++) {
+
+          if (this.config.status.PoblacionJson.data[i][1].des == year) {
+            this.config.listPoblacion[2 * t] = this.config.status.PoblacionJson.data[i][0].des;
+            this.config.listPoblacion[2 * t + 1] = this.config.status.PoblacionJson.data[i][3].format;
+            t = t + 1;
+          }
+        }
+
+        this.config.listPoblacion = this.normalizaMunicipio(this.config.listPoblacion);
+        if (requestPoblacion.status == 200) {
+          document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+          document.getElementById('controlCarga').style.display = 'none';
+          if (document.getElementById('selectRepresentacion').value == 'Poblacion') {
+            this.representaPoblacion();
+          }
+          this.config.status.stPoblacion = true;
+        }
+
+        requestPoblacion.abort();
+
+      }
+    } else {
+      this.listPoblacion = [];
+
       let t = 0;
       for (let i = 0; i < this.config.status.PoblacionJson.data.length; i++) {
 
@@ -1268,19 +1306,11 @@ export default class MunpanelControl extends M.Control {
           t = t + 1;
         }
       }
-
       this.config.listPoblacion = this.normalizaMunicipio(this.config.listPoblacion);
-      if (requestPoblacion.status == 200) {
-        document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
-        document.getElementById('controlCarga').style.display = 'none';
-        if (document.getElementById('selectRepresentacion').value == 'Poblacion') {
-          this.representaPoblacion();
-        }
-        this.config.status.stPoblacion = true;
+      if (document.getElementById('selectRepresentacion').value == 'Poblacion') {
+        this.representaPoblacion();
       }
-
-      requestPoblacion.abort();
-
+      this.config.status.stPoblacion = true;
     }
 
   }
@@ -1323,9 +1353,78 @@ export default class MunpanelControl extends M.Control {
     requestSegsocial.responseType = 'json';
     requestSegsocial.send();
 
+    if (this.config.status.SegsocialJson == '') {
+      requestSegsocial.onload = () => {
+        this.config.status.SegsocialJson = requestSegsocial.response;
+        let t = 0;
 
-    requestSegsocial.onload = () => {
-      this.config.status.SegsocialJson = requestSegsocial.response;
+        this.config.ssYear = this.config.status.SegsocialJson.data[0][3].des;
+
+        document.getElementById('tituloSS').innerHTML = 'Afiliación Seg. Social ' + this.config.ssYear;
+
+
+
+        if (sexo != 'Ambos sexos disgregados') {
+          for (let i = 0; i < this.config.status.SegsocialJson.data.length; i++) {
+            if ((this.config.status.SegsocialJson.data[i][1].des == regimen) && (this.config.status.SegsocialJson.data[i][2].des == sexo)) {
+              this.config.listSegsocial[2 * t] = this.config.status.SegsocialJson.data[i][0].des;
+              if ((this.config.status.SegsocialJson.data[i][4].format != '*') && (this.config.status.SegsocialJson.data[i][4].format != '')) {
+                this.config.listSegsocial[2 * t + 1] = this.config.status.SegsocialJson.data[i][4].format;
+              }
+              if (this.config.status.SegsocialJson.data[i][4].format == '*') {
+                this.config.listSegsocial[2 * t + 1] = '< 5'
+              }
+              if (this.config.status.SegsocialJson.data[i][4].format == '') {
+                this.config.listSegsocial[2 * t + 1] = '---';
+              }
+              t = t + 1;
+            }
+          }
+        }
+
+        if (sexo == 'Ambos sexos disgregados') {
+          t = 0;
+
+          for (let i = 0; i < this.config.status.SegsocialJson.data.length; i++) {
+
+            if ((this.config.status.SegsocialJson.data[i][1].des == regimen) && (this.config.status.SegsocialJson.data[i][2].des == 'Hombres')) {
+              this.config.listSegsocial[t] = this.config.status.SegsocialJson.data[i][0].des; // municipio
+              t = t + 1;
+
+              this.config.listSegsocial[t] = this.config.status.SegsocialJson.data[i][4].format;  //hombres
+              if (this.config.listSegsocial[t] == '*') { this.config.listSegsocial[t] = '< 5' }
+              if (this.config.listSegsocial[t] == '') { this.config.listSegsocial[t] = '---' }
+              t = t + 1;
+
+              this.config.listSegsocial[t] = this.config.status.SegsocialJson.data[i + 1][4].format;   //mujeres
+              if (this.config.listSegsocial[t] == '*') { this.config.listSegsocial[t] = '< 5' }
+              if (this.config.listSegsocial[t] == '') { this.config.listSegsocial[t] = '---' }
+              t = t + 1;
+
+              this.config.listSegsocial[t] = this.config.status.SegsocialJson.data[i + 2][4].format;   //ambos
+              if (this.config.listSegsocial[t] == '*') { this.config.listSegsocial[t] = '< 5' }
+              if (this.config.listSegsocial[t] == '') { this.config.listSegsocial[t] = '---' }
+              t = t + 1;
+
+            }
+          }
+
+        }
+        this.config.listSegsocial = this.normalizaMunicipio(this.config.listSegsocial);
+
+        if (requestSegsocial.status == 200) {
+          document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
+          document.getElementById('controlCarga').style.display = 'none';
+          if (document.getElementById('selectRepresentacion').value == 'Afiliacion') {
+            this.representaSegSocial();
+          }
+          this.config.status.stSegsocial = true;
+        }
+
+        requestSegsocial.abort();
+
+      }
+    } else {
       let t = 0;
 
       this.config.ssYear = this.config.status.SegsocialJson.data[0][3].des;
@@ -1381,20 +1480,11 @@ export default class MunpanelControl extends M.Control {
 
       }
       this.config.listSegsocial = this.normalizaMunicipio(this.config.listSegsocial);
-
-      if (requestSegsocial.status == 200) {
-        document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
-        document.getElementById('controlCarga').style.display = 'none';
-        if (document.getElementById('selectRepresentacion').value == 'Afiliacion') {
-          this.representaSegSocial();
-        }
-        this.config.status.stSegsocial = true;
+      if (document.getElementById('selectRepresentacion').value == 'Afiliacion') {
+        this.representaSegSocial();
       }
-
-      requestSegsocial.abort();
-
+      this.config.status.stSegsocial = true;
     }
-
   }
 
   representaPoblacion() {
@@ -1407,27 +1497,27 @@ export default class MunpanelControl extends M.Control {
           if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listPoblacion[j]) {
             let pob = Number(this.config.listPoblacion[j + 1].replace('.', ''));
 
-            if (pob <= 1000) {             
+            if (pob <= 1000) {
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_1000);
             }
             if ((pob > 1000) && (pob <= 5000)) {
-             
+
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_1000_5000);
             }
             if ((pob > 5000) && (pob <= 10000)) {
-              
+
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_5000_10000);
             }
             if ((pob > 10000) && (pob <= 50000)) {
-              
+
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_10000_50000);
             }
             if ((pob > 50000) && (pob <= 100000)) {
-              
+
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob_50000_100000);
             }
             if (pob > 100000) {
-              
+
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.pobList.pob100000_);
             }
           }
@@ -1444,7 +1534,7 @@ export default class MunpanelControl extends M.Control {
   representaSuperavit() {
     for (let i = 0; i < this.config.layerList.length; i++) {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
-        
+
         this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup_sin_dato);   // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE SUPERAVIT
 
         for (let j = 0; j < this.config.listSuperavit.length; j = j + 2) {
@@ -1452,9 +1542,9 @@ export default class MunpanelControl extends M.Control {
             let sup = Number(this.config.listSuperavit[j + 1]);
 
             if ((sup >= 0) && (sup <= 500000)) {
-              
+
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup0_05);
-              
+
             }
             if ((sup > 500000) && (sup <= 1000000)) {
               this.config.layerList[i].getFeatures()[t].setStyle(this.config.supList.sup05_1);
@@ -1492,9 +1582,9 @@ export default class MunpanelControl extends M.Control {
 
     for (let i = 0; i < this.config.layerList.length; i++) {
       for (let t = 0; t < this.config.layerList[i].getFeatures().length; t++) {
-        
+
         this.config.layerList[i].getFeatures()[t].setStyle(this.config.afiList.afi_sin_dato);   // REPRESENTA DE ESTE MODO EN EL CASO DE NO ENCONTRAR LOS DATOS DE AFILIACION
-       
+
         if (this.config.ssSexo != 'Ambos sexos disgregados') {
           for (let j = 0; j < this.config.listSegsocial.length; j = j + 2) {
             if (this.config.layerList[i].getFeatures()[t].getAttribute('nombre') == this.config.listSegsocial[j]) {

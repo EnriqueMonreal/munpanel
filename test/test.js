@@ -163,16 +163,7 @@ const estiloHuelva = new M.style.Polygon({
   }
 });
 
-const estiloPrueba = new M.style.Polygon({
-  fill: {
-    color: '#0000ff',
-    opacity: 0.5,
-  },
-  stroke: {
-    color: '#000000',
-    width: 4
-  }
-});
+
 
 // ESTILOS REPRESENTACION POBLACIÓN
 
@@ -411,6 +402,7 @@ const afi10000_ = new M.style.Polygon({
   }
 });
 
+
 const categoriaCadiz = new M.style.Category("provincia", {
   "Cádiz": estiloCadiz
 });
@@ -551,7 +543,8 @@ const configMunpanel = {
     afi10000_:afi10000_
   },
 
-  estiloPrueba: estiloPrueba,
+  
+ 
 
   selectedFeature: selectedFeature,
   selectedProv: selectedProv,
