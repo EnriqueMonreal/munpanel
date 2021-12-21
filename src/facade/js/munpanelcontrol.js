@@ -83,7 +83,8 @@ export default class MunpanelControl extends M.Control {
 
       document.querySelectorAll('div.m-panel.m-leyenda>div.m-panel-controls>div.leyenda')[0].innerHTML = '<img src="../../../leyendas/provincias.png" alt="Leyenda Provincias" title ="Leyenda Provincias" >';
 
-
+      
+      
 
       selectorProvincia.addEventListener('change', () => {
         const Provi = selectorProvincia.value;
@@ -107,6 +108,10 @@ export default class MunpanelControl extends M.Control {
 
         if (this.map_.getPopup()) {
           this.map_.removePopup();
+        }
+
+        if (this.config.munAnterior != false) {
+          this.config.munAnterior.setStyle(this.config.stAnterior);
         }
 
         if (selectorRepresentacion.value == 'Provincias') {
@@ -212,6 +217,7 @@ export default class MunpanelControl extends M.Control {
 
           this.config.ssRegimen = selectorRegimen.value;
           this.config.ssSexo = selectorSexo.value;
+          this.config.status.opcSegsocial = true;
 
 
           if (this.config.status.SegsocialJson == '') {

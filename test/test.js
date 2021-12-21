@@ -490,7 +490,10 @@ map.addLayers([Almeria, Granada, Jaen, Cordoba, Sevilla, Huelva, Cadiz, Malaga])
 
 const vistaInicial = map.getMaxExtent();
 
-map.addControls(['scaleline', 'mouse', 'OverviewMap', 'panzoombar']);
+ map.addControls(['scaleline', 'mouse', 'panzoombar']);
+
+
+
 
 const configMunpanel = {
   layerList: [
