@@ -102,7 +102,7 @@ export default class MunpanelControl extends M.Control {
 
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-         
+
         }
 
         if (this.map_.getPopup()) {
@@ -115,7 +115,7 @@ export default class MunpanelControl extends M.Control {
           this.config.stAnterior = false;   // INICIALIZAMOS VALORES
           this.config.munAnterior = false;
 
-         
+
 
           for (let i = 0; i < this.config.layerList.length; i++) {
             this.config.layerList[i].setStyle(this.config.styleList[i]);
@@ -142,7 +142,7 @@ export default class MunpanelControl extends M.Control {
 
           this.config.pobYear = selectorYear.value;
 
-         
+
 
 
 
@@ -177,7 +177,7 @@ export default class MunpanelControl extends M.Control {
           this.config.stAnterior = false;   // INICIALIZAMOS VALORES
           this.config.munAnterior = false;
 
-         
+
 
 
 
@@ -212,7 +212,7 @@ export default class MunpanelControl extends M.Control {
 
           this.config.ssRegimen = selectorRegimen.value;
           this.config.ssSexo = selectorSexo.value;
-         
+
 
           if (this.config.status.SegsocialJson == '') {
             document.getElementById('controlCarga').style.display = 'block';
@@ -288,7 +288,7 @@ export default class MunpanelControl extends M.Control {
       selectorYear.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-         
+
         }
 
         if (this.map_.getPopup()) {
@@ -328,14 +328,14 @@ export default class MunpanelControl extends M.Control {
 
         }
 
-       
+
 
       });
 
       selectorRegimen.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-         
+
         }
 
         if (this.map_.getPopup()) {
@@ -358,7 +358,7 @@ export default class MunpanelControl extends M.Control {
           this.config.status.opcSegsocial = true;
           if (this.config.status.SegsocialJson == '') {
             document.getElementById('controlCarga').style.display = 'block';
-          }else{
+          } else {
             document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
           }
           if (selectorSexo.value == '') {
@@ -366,8 +366,8 @@ export default class MunpanelControl extends M.Control {
           }
           this.config.ssRegimen = selectorRegimen.value;
           this.config.ssSexo = selectorSexo.value;
-          this.config.listSegsocial = [];  
-  
+          this.config.listSegsocial = [];
+
           this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
 
         } else {
@@ -375,14 +375,13 @@ export default class MunpanelControl extends M.Control {
           document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
         }
 
-        if ((selectorRegimen.value != '') && (selectorSexo.value != '')) {
-          this.config.status.opcSegsocial = 'true';
-        } else {
+        if ((selectorRegimen.value == '') || (selectorSexo.value == '')) {
+        
           this.config.status.opcSegsocial = 'false';
         }
+
+
         
-
-
 
       });
 
@@ -390,14 +389,14 @@ export default class MunpanelControl extends M.Control {
 
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          
+
         }
 
         if (this.map_.getPopup()) {
           this.map_.removePopup();
         }
 
-       
+
 
         if (this.config.munAnterior != false) {
           this.config.munAnterior.setStyle(this.config.stAnterior);
@@ -412,9 +411,9 @@ export default class MunpanelControl extends M.Control {
 
         if (selectorSexo.value != '') {
           this.config.status.opcSegsocial = true;
-          if(this.config.status.SegsocialJson == '') {
-          document.getElementById('controlCarga').style.display = 'block';
-          }else{
+          if (this.config.status.SegsocialJson == '') {
+            document.getElementById('controlCarga').style.display = 'block';
+          } else {
             document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
           }
           if (selectorRegimen.value == '') {
@@ -422,8 +421,8 @@ export default class MunpanelControl extends M.Control {
           }
           this.config.ssRegimen = selectorRegimen.value;
           this.config.ssSexo = selectorSexo.value;
-          this.config.listSegsocial = [];  
-  
+          this.config.listSegsocial = [];
+
           this.consultaSegSocial(this.config.ssRegimen, this.config.ssSexo);
 
         } else {
@@ -431,20 +430,19 @@ export default class MunpanelControl extends M.Control {
           document.getElementById('selectSexoAfiliacion').style.marginBottom = '27px';
         }
 
-        if ((selectorRegimen.value != '') && (selectorSexo.value != '')) {
-          this.config.status.opcSegsocial = 'true';
-        } else {
+        if ((selectorRegimen.value == '') || (selectorSexo.value == '')) {
+         
           this.config.status.opcSegsocial = 'false';
         }
 
         
-       
+
       });
 
       selectorSuperavit.addEventListener('change', () => {
         if (this.config.selectedFeature != '') {
           this.map_.getFeatureHandler().unselectFeatures([this.config.selectedFeature], this.config.selectedProv, {});
-          
+
         }
 
         if (this.map_.getPopup()) {
@@ -484,7 +482,7 @@ export default class MunpanelControl extends M.Control {
           this.config.status.opcSuperavit = false;
         }
 
-        
+
 
       });
 
@@ -894,6 +892,7 @@ export default class MunpanelControl extends M.Control {
             this.map_.setCenter({ x: this.centroide(muni)[0], y: this.centroide(muni)[1], draw: false });
 
             this.cambiaSelect(mun);
+            
           }
         }
       }
@@ -944,19 +943,24 @@ export default class MunpanelControl extends M.Control {
       densidad = densidad.replace('.', ',') + ' hab./Km²';
     }
 
-    if (this.config.ssSexo == 'Hombres') {
-      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Hombres</th><td>' + this.config.ssHombres + '</td></tr></table>';
+    
+    
+    if (this.config.status.opcSegsocial==true) {
+      if (this.config.ssSexo == 'Hombres') {
+        ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Hombres</th><td>' + this.config.ssHombres + '</td></tr></table>';
+      }
+      if (this.config.ssSexo == 'Mujeres') {
+        ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Mujeres</th><td>' + this.config.ssMujeres + '</td></tr></table>';
+      }
+      if (this.config.ssSexo == 'Ambos sexos') {
+        ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Ambos sexos</th><td>' + this.config.ssAmbos + '</td></tr></table>';
+      }
+      if (this.config.ssSexo == 'Ambos sexos disgregados') {
+        ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Hombres</th><td>' + this.config.ssHombres + '</td></tr><tr><th>Mujeres</th><td>' + this.config.ssMujeres + '</td></tr><tr><th>Ambos sexos</th><td>' + this.config.ssAmbos + '</td></tr></table>';
+      }
+      
     }
-    if (this.config.ssSexo == 'Mujeres') {
-      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Mujeres</th><td>' + this.config.ssMujeres + '</td></tr></table>';
-    }
-    if (this.config.ssSexo == 'Ambos sexos') {
-      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Ambos sexos</th><td>' + this.config.ssAmbos + '</td></tr></table>';
-    }
-    if (this.config.ssSexo == 'Ambos sexos disgregados') {
-      ss = '<table class="list_feat"><caption>Afiliación Seg. Social ' + this.config.ssYear + '</caption><tr><th colspan="2">' + this.config.ssRegimen.replace("*", "") + '</th></tr><tr><th>Hombres</th><td>' + this.config.ssHombres + '</td></tr><tr><th>Mujeres</th><td>' + this.config.ssMujeres + '</td></tr><tr><th>Ambos sexos</th><td>' + this.config.ssAmbos + '</td></tr></table>';
-    }
-
+    
     if (this.config.pobYear != '') {
       pob = '<tr><th>Población año ' + this.config.pobYear + ' </th><td>' + this.config.pobSelect + '</td></tr><tr><th>Densidad de población año ' + this.config.pobYear + ' </th><td>' + densidad + '</td></tr><tr></tr>';
     }
